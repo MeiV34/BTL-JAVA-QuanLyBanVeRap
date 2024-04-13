@@ -1,34 +1,36 @@
-package connectDB;
+package connect;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 public class ConnectDB {
 	public static Connection con = null;
-	private static ConnectDB instance = new ConnectDB();
-	public static ConnectDB getInstance() {
+	public static ConnectDB instance = new ConnectDB();
+	public static ConnectDB getInstance () {
 		return instance;
 	}
 	
 	public void connect() {
-		String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyLopHoc;trustServerCertificate=true;encrypt=true";
-		String user = "sa";
-		String password = "@Sapassword";
 		try {
-			con = DriverManager.getConnection(url, user, password);
-		} catch (SQLException e) {
-			System.out.println("lỗi" + e.getMessage());
+			String url = "jdbc:sqlserver://localhost:1433;databasename=QuanLyBanVe";
+			String user = "sa";
+			String pwd = "123";
+			con = DriverManager.getConnection(url, user, pwd);
+//			JOptionPane.showMessageDialog(null, "Connected!");
+		}catch(SQLException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Unconnected!");
 		}
 	}
-	public static void main(String[] args) {
-		
-		
+	public void disconnect() throws SQLException {
+		if(con != null) {
+			con.close();
+		}
 	}
-
 	public static Connection getConnection() {
 		return con;
 	}
 }
-
