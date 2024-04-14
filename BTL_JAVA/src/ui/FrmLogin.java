@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import connect.ConnectDB;
+import connectDB.*;
 
 
 public class FrmLogin extends JFrame implements ActionListener{

@@ -48,8 +48,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
-import connect.ConnectDB;
-import dao.Phim_DAO;
+import connectDB.*;
+import DAO.Phim_DAO;
 import entity.Phim;
 
 public class FrmPhim extends JFrame implements ActionListener,MouseListener{

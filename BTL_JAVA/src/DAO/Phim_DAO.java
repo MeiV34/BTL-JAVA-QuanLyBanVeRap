@@ -1,4 +1,4 @@
-package dao;
+package DAO;
 
 import java.sql.Statement;
 import java.sql.Connection;
@@ -11,7 +11,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import connect.ConnectDB;
+import connectDB.*;
 import entity.Phim;
 
 public class Phim_DAO {
