@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,29 +28,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
 import javax.swing.table.DefaultTableModel;
 
 import connectDB.*;
 import DAO.Phim_DAO;
+import ui.FrmNhanVien;
 import entity.Phim;
 
 public class FrmPhim extends JFrame implements ActionListener,MouseListener{
@@ -73,9 +56,19 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private Connection con;
 	private String[] head;
 	private JLayeredPane layeredPane = new JLayeredPane();
+	private FrmNhanVien taoFrame1;
+	private JPanel pnlTinhLuongNV;
+	
+	public void switchPanels(JPanel panel) {
+		layeredPane.removeAll();
+		layeredPane.add(panel);
+		layeredPane.repaint();
+		layeredPane.revalidate();
+	}
 
-	public FrmPhim() throws IOException, SQLException {
+	public FrmPhim() throws IOException, SQLException, ParseException {
 		super("Rạp Phim BHV");
+		setSize(1966,768);
 		// Connect 
 		ConnectDB.getInstance().connect();
 		con = ConnectDB.getConnection();// Gán kết nối từ ConnectDB vào biến thành viên con
@@ -322,7 +315,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
         btnVe.addActionListener(new PopupMenuListener(Ve, btnVe));
         btnPhong.addActionListener(new PopupMenuListener(Phong, btnPhong));
         btnKhachHang.addActionListener(new PopupMenuListener(KhachHang, btnKhachHang));
-        btnNhanVien.addActionListener(new PopupMenuListener(NhanVien, btnNhanVien));
+        btnNhanVien.addActionListener(this);
  		
 		//Top
 			// Tạo các JMenu
@@ -367,6 +360,11 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			pnlSubLeft2.setBackground(new Color(65, 60, 60));
 			pnlLeft.add(pnlSubLeft1);
 			pnlLeft.add(pnlSubLeft2);
+			
+			layeredPane.setBackground(new Color(0, 51, 255));
+			layeredPane.setBounds(201, 0, 416, 629);
+//			getContentPane().add(layeredPane);
+//			layeredPane.setLayout(new CardLayout(0, 0));
 		// Center
 			
 			// Panels
@@ -557,6 +555,15 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		layeredPane.add(pnlCenMain, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimUpdate, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimFind, JLayeredPane.PALETTE_LAYER); 
+		//Tạo Frame tính lương nhân viên
+		taoFrame1 = new FrmNhanVien();
+		pnlTinhLuongNV =  taoFrame1.taoFrmNhanVien();
+		layeredPane.add(pnlTinhLuongNV);
+		btnNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			switchPanels(pnlTinhLuongNV);
+		}
+	});
         
 		btnAdd.addActionListener(this);
 		btnDel.addActionListener(this);
@@ -568,7 +575,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		pnlAll.add(layeredPane);
 		pnlAll.add(pnlLeft, BorderLayout.WEST);
 		this.add(pnlAll);
-		this.setSize(1280,720);
+		this.setSize(1366,768);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
@@ -722,7 +729,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		}
 		
 	}
-	public static void main(String[] args) throws IOException, SQLException {
+	public static void main(String[] args) throws IOException, SQLException, ParseException {
 		new FrmPhim();
 	}
 	@Override

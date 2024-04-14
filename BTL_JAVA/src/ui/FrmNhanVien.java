@@ -70,10 +70,15 @@ public class FrmNhanVien extends JFrame {
 	private JTable table;
 	private JTextField txtTimKiem;
 	private JButton btnTimKiem;
-	public frmNhanVien() throws ParseException  {
+	public FrmNhanVien() throws ParseException  {
+		add(taoFrmNhanVien());
 		
-		getContentPane().setBackground(new Color(228, 243, 208));
-		getContentPane().setLayout(null);
+	}
+	
+	public JPanel taoFrmNhanVien() {
+		JPanel pn_NV= new JPanel();
+		pn_NV.setBackground(new Color(228, 243, 208));
+		pn_NV.setLayout(null);
 		setLocation(250, 30);
 		
 		JPanel pnTXT=new JPanel();
@@ -258,18 +263,17 @@ public class FrmNhanVien extends JFrame {
 		pntblNV.add(btnTimKiem);
 		
 		
-		getContentPane().add(pnTXT);
-		getContentPane().add(pntblNV);
+		pn_NV.add(pnTXT);
+		pn_NV.add(pntblNV);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(1084,768);
-		setVisible(true);
-		
+		pn_NV.setSize(1084,768);
+		return pn_NV;
 	}
 
 	public static void main(String[] args) {
 		try {
-			new FrmNhanVien();
+//			new FrmNhanVien().setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
