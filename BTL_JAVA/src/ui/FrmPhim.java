@@ -59,13 +59,25 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private FrmNhanVien taoFrame1;
 	private JPanel pnlNV;
 	
+	//xóa hết các panel cũ và add panel mới vào
 	public void switchPanels(JPanel panel) {
 		layeredPane.removeAll();
 		layeredPane.add(panel);
 		layeredPane.repaint();
 		layeredPane.revalidate();
 	}
-
+	//set lại màu cho menu, khi nhấn button nào chỉ set lại màu cho
+	//button đó thôi
+	public void resetTargetMenu() {
+		btnMain.setBackground(new Color(204, 241, 157));
+        btnPhim.setBackground(new Color(204, 241, 157));
+        btnLich.setBackground(new Color(204, 241, 157));
+        btnLich.setBackground(new Color(204, 241, 157));
+        btnVe.setBackground(new Color(204, 241, 157));
+        btnPhong.setBackground(new Color(204, 241, 157));
+        btnKhachHang.setBackground(new Color(204, 241, 157));
+        btnNhanVien.setBackground(new Color(204, 241, 157));
+	}
 	public FrmPhim() throws IOException, SQLException, ParseException {
 		super("Rạp Phim BHV");
 		setSize(1966,768);
@@ -481,16 +493,9 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+//            	reset màu xong set lại màu btn được nhấn
+                resetTargetMenu();
                 btnMain.setBackground(new Color(12, 138, 255));
-                btnPhim.setBackground(new Color(204, 241, 157));
-                btnLich.setBackground(new Color(204, 241, 157));
-                btnLich.setBackground(new Color(204, 241, 157));
-                btnVe.setBackground(new Color(204, 241, 157));
-                btnPhong.setBackground(new Color(204, 241, 157));
-                btnKhachHang.setBackground(new Color(204, 241, 157));
-                btnNhanVien.setBackground(new Color(204, 241, 157));
-
                 pnlCenPhimFind.setVisible(false);
                 pnlCenPhimUpdate.setVisible(false);
 
@@ -537,15 +542,9 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnPhim.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Thay đổi kích thước của nút
-                btnMain.setBackground(new Color(204, 241, 157));
+//            	reset màu xong set lại màu btn được nhấn
+            	resetTargetMenu();
                 btnPhim.setBackground(new Color(12, 138, 255));
-                btnLich.setBackground(new Color(204, 241, 157));
-                btnLich.setBackground(new Color(204, 241, 157));
-                btnVe.setBackground(new Color(204, 241, 157));
-                btnPhong.setBackground(new Color(204, 241, 157));
-                btnKhachHang.setBackground(new Color(204, 241, 157));
-                btnNhanVien.setBackground(new Color(204, 241, 157));
             }
         });
 		taoFrame1 = new FrmNhanVien();
@@ -553,6 +552,9 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 //		layeredPane.add(pnlNV);
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+//            	reset màu xong set lại màu btn được nhấn
+				resetTargetMenu();
+				btnNhanVien.setBackground(new Color(12, 138, 255));
 				pnlCenPhimUpdate.setVisible(false);
             	pnlCenMain.setVisible(false);
 
