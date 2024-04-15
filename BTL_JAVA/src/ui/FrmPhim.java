@@ -57,7 +57,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private String[] head;
 	private JLayeredPane layeredPane = new JLayeredPane();
 	private FrmNhanVien taoFrame1;
-	private JPanel pnlTinhLuongNV;
+	private JPanel pnlNV;
 	
 	public void switchPanels(JPanel panel) {
 		layeredPane.removeAll();
@@ -548,22 +548,38 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
                 btnNhanVien.setBackground(new Color(204, 241, 157));
             }
         });
+		taoFrame1 = new FrmNhanVien();
+		pnlNV =  taoFrame1.taoFrmNhanVien();
+//		layeredPane.add(pnlNV);
+		btnNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				pnlCenPhimUpdate.setVisible(false);
+            	pnlCenMain.setVisible(false);
+
+                pnlCenPhimFind.setVisible(false);
+				pnlNV.setVisible(true);
+				pnlNV.revalidate();
+	            pnlNV.repaint();
+		}
+	});
+		
 
 		DocDuLieuVaoTable();
 
 		// LayeredPanel	
 		layeredPane.add(pnlCenMain, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimUpdate, JLayeredPane.PALETTE_LAYER); 
-		layeredPane.add(pnlCenPhimFind, JLayeredPane.PALETTE_LAYER); 
+		layeredPane.add(pnlCenPhimFind, JLayeredPane.PALETTE_LAYER);
+		layeredPane.add(pnlNV, JLayeredPane.PALETTE_LAYER);
 		//Tạo Frame tính lương nhân viên
-		taoFrame1 = new FrmNhanVien();
-		pnlTinhLuongNV =  taoFrame1.taoFrmNhanVien();
-		layeredPane.add(pnlTinhLuongNV);
-		btnNhanVien.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			switchPanels(pnlTinhLuongNV);
-		}
-	});
+//		taoFrame1 = new FrmNhanVien();
+//		pnlNV =  taoFrame1.taoFrmNhanVien();
+//		layeredPane.add(pnlNV);
+//		btnNhanVien.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//			switchPanels(pnlNV);
+//		}
+//	});
         
 		btnAdd.addActionListener(this);
 		btnDel.addActionListener(this);
