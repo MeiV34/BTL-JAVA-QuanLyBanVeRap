@@ -167,12 +167,12 @@ public class FrmNhanVien extends JFrame {
 		pnBtn.setLayout(new GridLayout(3,5));
 		pnBtn.add(spacer1=new JLabel());
 		pnBtn.add(btnThem=new JButton());
-		btnThem.setIcon(new ImageIcon("img\\add-user.png"));
+		btnThem.setIcon(new ImageIcon("img/add-user.png"));
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer2=new JLabel());
 		pnBtn.add(btnXoa=new JButton());
-		btnXoa.setIcon(new ImageIcon("img\\delete-user.png"));
+		btnXoa.setIcon(new ImageIcon("img/delete-user.png"));
 		btnXoa.setToolTipText("Xóa nhân viên");
 		btnXoa.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer3=new JLabel());
@@ -185,12 +185,12 @@ public class FrmNhanVien extends JFrame {
 		
 		pnBtn.add(spacer7=new JLabel());
 		pnBtn.add(btnSua=new JButton());
-		btnSua.setIcon(new ImageIcon("img\\update-user.png"));
+		btnSua.setIcon(new ImageIcon("img/update-user.png"));
 		btnSua.setToolTipText("Sửa thông tin");
 		btnSua.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer8=new JLabel());
 		pnBtn.add(btnLamMoi=new JButton());
-		btnLamMoi.setIcon(new ImageIcon("img\\refresh.png"));
+		btnLamMoi.setIcon(new ImageIcon("img/refresh.png"));
 		btnLamMoi.setToolTipText("Làm mới");
 		btnLamMoi.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer9=new JLabel());		
@@ -251,7 +251,7 @@ public class FrmNhanVien extends JFrame {
 		pntblNV.add(txtTimKiem);
 
 		btnTimKiem = new JButton();
-		btnTimKiem.setIcon(new ImageIcon("img\\search.png"));
+		btnTimKiem.setIcon(new ImageIcon("img/search.png"));
 		btnTimKiem.setBackground(new Color(255, 255, 255));
 		btnTimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -267,13 +267,13 @@ public class FrmNhanVien extends JFrame {
 		pn_NV.add(pntblNV);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		pn_NV.setSize(1084,768);
+		setSize(1084,768);
 		return pn_NV;
 	}
 
 	public static void main(String[] args) {
 		try {
-//			new FrmNhanVien().setVisible(true);
+			new FrmNhanVien().setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
