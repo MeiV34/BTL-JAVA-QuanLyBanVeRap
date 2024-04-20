@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+    
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "FrmLogin",
+            "request": "launch",
+            "mainClass": "ui.FrmLogin",
+            "projectName": "BTL_JAVA"
+        },
+        {
+            "type": "java",
+            "name": "FrmNhanVien",
+            "request": "launch",
+            "mainClass": "ui.FrmNhanVien",
+            "projectName": "BTL_JAVA"
+        },
+        {
+            "type": "java",
+            "name": "FrmPhim",
+            "request": "launch",
+            "mainClass": "ui.FrmPhim",
+            "projectName": "BTL_JAVA"
+        }
+    ]
+}
