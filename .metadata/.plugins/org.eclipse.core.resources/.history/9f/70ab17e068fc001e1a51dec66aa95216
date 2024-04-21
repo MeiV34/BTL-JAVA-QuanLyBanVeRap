@@ -1,0 +1,131 @@
+package DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
+
+import connectDB.ConnectDB;
+import entity.KhachHang;
+
+public class KhachHang_DAO {
+
+	private Connection con;
+ss
+	public ArrayList<KhachHang> getAllKhachHang(){
+		ArrayList<KhachHang> listKhachHang = new ArrayList<KhachHang>();
+		try {
+			ConnectDB.getInstance().connect();
+			con = ConnectDB.getConnection();
+			String sql = "SELECT * FROM KhachHang";
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(sql);
+			while(rs.next()) {
+				String idKhachHang = rs.getString(1);
+				String hoTen = rs.getString(2);
+				String email = rs.getString(3);
+				String sdt = rs.getString(4);
+				KhachHang kh = new KhachHang(idKhachHang, hoTen, email, sdt);
+				listKhachHang.add(kh);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listKhachHang;
+	}
+	public boolean addKhachHang(KhachHang p) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		int n = 0;
+			try {
+				// Lấy Date từ java.util.Date
+				Date ngayCC = p.getNgayCC();
+				Date ngayKT = p.getNgayKT();
+				
+				// Chuyển đổi từ java.util.Date sang java.sql.Date
+			    java.sql.Date sqlNgayCC = new java.sql.Date(ngayCC.getTime());
+			    java.sql.Date sqlNgayKT = new java.sql.Date(ngayKT.getTime());
+					
+				String sql = "INSERT INTO KhachHang VALUES(?,?,?,?,?,?,?,?)";
+				PreparedStatement state = con.prepareStatement(sql);
+				state.setString(1, p.getIdKhachHang());
+				state.setString(2, p.gethoTen());
+				state.setString(3, p.getemail());
+				state.setString(4, p.getsdt());
+				state.setInt(5, p.getThoiLuong());
+				state.setDate(6,sqlNgayCC);
+				state.setDate(7,sqlNgayKT);
+				state.setInt(8, p.getDanhGia());
+				n = state.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Trùng mã KhachHang!");
+			}
+			return n > 0;
+	}
+	
+	public boolean updateKhachHang(KhachHang p) {
+		ConnectDB.getInstance();
+		con = ConnectDB.getConnection();
+		PreparedStatement state = null;
+		int n = 0;
+		try {
+			Date ngayCongChieu = (Date) p.getNgayCC();
+			Date ngayKetThuc = (Date) p.getNgayKT();
+			// Chuyển đổi từ java.util.Date sang java.sql.Date
+		    java.sql.Date sqlNgayCC = new java.sql.Date(ngayCongChieu.getTime());
+		    java.sql.Date sqlNgayKT = new java.sql.Date(ngayKetThuc.getTime());
+		    
+			String sql = "UPDATE KhachHang set "
+						+ "hoTen = ?,"
+						+ "email = ?,"
+						+ "sdt = ?,"
+						+ "ThoiLuong = ?,"
+						+ "NgayPhatHanh = ?,"
+						+ "NgayKetThuc = ? ,"
+						+ "XepHang = ? "
+						+ "WHERE MaKhachHang = ?";
+			state = con.prepareStatement(sql);
+			state.setString(1, p.gethoTen());
+			state.setString(2, p.getemail());
+			state.setString(3, p.getsdt());
+			state.setInt(4, p.getThoiLuong());
+			state.setDate(5, sqlNgayCC);
+			state.setDate(6, sqlNgayKT);
+			state.setInt(7, p.getDanhGia());
+			state.setString(8, p.getIdKhachHang());
+			n = state.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				state.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean removeKhachHang(String maKhachHang) {
+		ConnectDB.getInstance();
+		con = ConnectDB.getConnection();
+		PreparedStatement state = null;
+		int n = 0 ;
+		try {
+			String sql = "DELETE FROM KhachHang Where MaKhachHang = ?";
+			state = con.prepareStatement(sql);
+			state.setString(1, maKhachHang);
+			n = state.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return n > 0;
+	}
+}

@@ -1,0 +1,13 @@
+package common;
+
+public enum TangMaKH {
+	INSTANCE; // Định nghĩa một instance duy nhất của enum
+
+    public static String tangMaKH(String maKH) {
+        String prefix = maKH.substring(0, 2);
+        String numberStr = maKH.substring(2);
+        int number = Integer.parseInt(numberStr) + 1;
+        String newNumberStr = String.valueOf(number);
+        return prefix + newNumberStr;
+    }
+}

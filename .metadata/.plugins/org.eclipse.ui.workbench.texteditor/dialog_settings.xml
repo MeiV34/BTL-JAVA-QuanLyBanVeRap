@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="txtMaKH"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="btnTimKiem"/>
+			<item value="txtMaKH"/>
+			<item value="actionPerformed"/>
+			<item value="img\\"/>
+			<item value="mouseClicked"/>
+			<item value="tableModel"/>
+			<item value="modelKH"/>
+			<item value="modelPhim"/>
+			<item value="tablePhimUpdate"/>
+			<item value="phim_DAO"/>
+			<item value="DocDuLieuVaoTable"/>
+			<item value="modelDanhSachKH"/>
+			<item value="p.getMaKH()"/>
+			<item value="p.getSdt()"/>
+			<item value="p.getEmail()"/>
+		</list>
+		<list key="replacehistory">
+			<item value="img/"/>
+			<item value="modelKH"/>
+			<item value="kh.getMaKH()"/>
+			<item value="kh.getSdt()"/>
+			<item value="kh.getEmail()"/>
+			<item value="kh.getHoTen()"/>
+			<item value="KhachHang kh"/>
+			<item value="sdt"/>
+			<item value="email"/>
+			<item value="hoTen"/>
+			<item value="KhachHang"/>
+			<item value="txtMa"/>
+			<item value="txtHoTen"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1062"/>
+		<item key="DIALOG_Y_ORIGIN" value="541"/>
+		<item key="DIALOG_WIDTH" value="336"/>
+		<item key="DIALOG_HEIGHT" value="402"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+</section>

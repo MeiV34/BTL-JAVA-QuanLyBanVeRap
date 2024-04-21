@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="SmartImportWizard">
+		<item key="SmartImportRootWizardPage.STORE_HIDE_ALREADY_OPEN" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_CLOSE_IMPORTED" value="false"/>
+		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
+		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
+		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/TH/STT110_VoNgocThuyVy_22653241_Tuan04_Sach 2"/>
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/TH/STT110_VoNgocThuyVy_22653241_Tuan08_ThongTinLopHoc"/>
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/TH/FRIENDS/javaSwing"/>
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/TH/STT110_VoNgocThuyVy_22653241_Tuan08_ThongTinLopHoc-1"/>
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/TH/STT10_VoNgocThuyVy_22653241_Tuan08_ThongTinLopHoc_Full"/>
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/TH/STT10_VoNgocThuyVy_22653241_NhanVien"/>
+			<item value="/Users/meidunk18/Documents/UNIVERSITY/NĂM 2/HK2/HSK_JAVA/BTL/BTL-JAVA-QuanLyBanVeRap/BTL_JAVA"/>
+		</list>
+	</section>
+</section>
