@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,41 +28,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerDateModel;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-import connectDB.ConnectDB;
+import connectDB.*;
 import DAO.Phim_DAO;
+import ui.FrmNhanVien;
 import entity.Phim;
 
 public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private JButton btnMain , btnPhim, btnLich, btnVe, btnPhong, btnKhachHang, btnNhanVien,
 					btnMenu,
-					btnFindMaPhim,btnFindTenPhim,
-					btnAdd,btnDel,btnDelAll,btnUpdate;
+					btnFind,btnAdd,btnDel,btnDelAll,btnUpdate;
 	private JLabel labTenRap, labImgLogo ,
 				   labIdPhim, labTenPhim, labDaoDienPhim, labTheLoaiPhim, labThoiLuongPhim,labNgayCCPhim,labNgayKTPhim,labDanhGiaPhim,
 				   labPoster1, labPoster2; 
-	private JTextField txtFindMaPhim,txtFindTenPhim,
+	private JTextField txtFind,
 			   		   txtIdPhim, txtTenPhim, txtDaoDienPhim, txtThoiLuongPhim, txtDanhGiaPhim;
 	private JSpinner txtNgayCCPhim,txtNgayKTPhim;
 	private JComboBox<String> cboTheLoai;
@@ -75,16 +56,20 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private Connection con;
 	private String[] head;
 	private JLayeredPane layeredPane = new JLayeredPane();
-
-	public FrmPhim() throws IOException, SQLException {
+	private FrmNhanVien frmNhanVien;
+	private JPanel pnlNV, pnlVe;
+//	private FrmBanVe frmBanVe;
+	
+	public FrmPhim() throws IOException, SQLException, ParseException {
 		super("Rạp Phim BHV");
+		
 		// Connect 
 		ConnectDB.getInstance().connect();
 		con = ConnectDB.getConnection();// Gán kết nối từ ConnectDB vào biến thành viên con
         if (con == null) {
             JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu");
             return;
-        } 
+        }
 		JPanel pnlAll = new JPanel();
 		pnlAll.setLayout(new BorderLayout());
 		
@@ -205,18 +190,15 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		
 		btnMenu = new JButton(imgIcon2);
 		
-		btnFindTenPhim= new JButton("Tìm theo tên phim");
-		btnFindMaPhim= new JButton("Tìm theo mã phim");
+		btnFind = new JButton(imgIcon5);
 		btnAdd = new JButton("Thêm");
 		btnDel = new JButton("Xóa");
 		btnDelAll = new JButton("Làm mới");
 		btnUpdate = new JButton("Sửa");
 		
 		// TextField
-		txtFindTenPhim= new JTextField();
- 		txtFindTenPhim.setPreferredSize(new Dimension(250,30));
- 		txtFindMaPhim= new JTextField();
- 		txtFindMaPhim.setPreferredSize(new Dimension(250,30));
+		txtFind = new JTextField();
+ 		txtFind.setPreferredSize(new Dimension(650,30));
  		txtIdPhim = new JTextField();
  		txtTenPhim = new JTextField();
  		txtDaoDienPhim = new JTextField();
@@ -247,15 +229,19 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
         ListLich.setBackground(new Color(204, 241, 157));
         
         // Menu item Vé
-      	JMenuItem UpdateVe = new JMenuItem("Cập nhật");
-      	UpdateVe.setPreferredSize(new Dimension(200, 50));
-      	UpdateVe.setBackground(new Color(204, 241, 157));
-        JMenuItem FindVe = new JMenuItem("Tìm kiếm");
-        FindVe.setPreferredSize(new Dimension(200, 50)); 
-        FindVe.setBackground(new Color(204, 241, 157));
-        JMenuItem ListVe = new JMenuItem("Xem danh sách Vé");
-        ListVe.setPreferredSize(new Dimension(200, 50));        
-        ListVe.setBackground(new Color(204, 241, 157));
+      	JMenuItem DonDatVe = new JMenuItem("Đặt vé");
+      	DonDatVe.setPreferredSize(new Dimension(200, 50));
+      	DonDatVe.setBackground(new Color(204, 241, 157));
+        JMenuItem ChiTietDonDatVe = new JMenuItem("Danh sách đơn đặt");
+        ChiTietDonDatVe.setPreferredSize(new Dimension(200, 50)); 
+        ChiTietDonDatVe.setBackground(new Color(204, 241, 157));
+      	JMenuItem DonBanVe = new JMenuItem("Bán vé");
+      	DonBanVe.setPreferredSize(new Dimension(200, 50));
+      	DonBanVe.setBackground(new Color(204, 241, 157));
+        JMenuItem ChiTietDonBanVe = new JMenuItem("Danh sách đơn bán");
+        ChiTietDonBanVe.setPreferredSize(new Dimension(200, 50)); 
+        ChiTietDonBanVe.setBackground(new Color(204, 241, 157));
+        
         
         // Menu item Phòng
       	JMenuItem UpdatePhong = new JMenuItem("Cập nhật");
@@ -294,7 +280,6 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
         JPopupMenu phim = new JPopupMenu();
         phim.add(UpdateFilm);
         phim.add(FindFilm);
-        phim.add(ListFilm);
 
         JPopupMenu lichChieu = new JPopupMenu();
         lichChieu.add(UpdateLich);
@@ -302,9 +287,10 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
         lichChieu.add(ListLich);
 
         JPopupMenu Ve = new JPopupMenu();
-        Ve.add(UpdateVe);
-        Ve.add(FindVe);
-        Ve.add(ListVe);
+        Ve.add(DonDatVe);
+        Ve.add(DonBanVe);
+        Ve.add(ChiTietDonDatVe);
+        Ve.add(ChiTietDonBanVe);
         
         JPopupMenu Phong = new JPopupMenu();
         Phong.add(UpdatePhong);
@@ -327,7 +313,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
         btnVe.addActionListener(new PopupMenuListener(Ve, btnVe));
         btnPhong.addActionListener(new PopupMenuListener(Phong, btnPhong));
         btnKhachHang.addActionListener(new PopupMenuListener(KhachHang, btnKhachHang));
-        btnNhanVien.addActionListener(new PopupMenuListener(NhanVien, btnNhanVien));
+        btnNhanVien.addActionListener(this);
  		
 		//Top
 			// Tạo các JMenu
@@ -335,7 +321,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	        menuBar = new JMenuBar();
 	        // Tạo JMenu
 	        LogOutMenu = new JMenu();
-	        LogOutMenu.setIcon(imgIcon2);// Đặt màu nền cho JMenu;
+	        LogOutMenu.setIcon(imgIcon2);
 	        LogOutMenu.setBackground(new Color(204, 241, 157));
 	        // Tạo các JMenuItem và thêm vào JMenu
 	        JMenuItem itemDangXuat = new JMenuItem("Đăng xuất");
@@ -372,7 +358,10 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			pnlSubLeft2.setBackground(new Color(65, 60, 60));
 			pnlLeft.add(pnlSubLeft1);
 			pnlLeft.add(pnlSubLeft2);
-		// Center
+			
+			layeredPane.setBackground(new Color(0, 51, 255));
+			layeredPane.setBounds(201, 0, 416, 629);
+			// Center
 			
 			// Panels
 
@@ -460,36 +449,22 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			pnlCenPhimFind.setBounds(0, 0,1035,682);
 			pnlCenPhimFind.setBackground(new Color(65, 60, 60));
 				JPanel pnlContentFind = new JPanel();
-				pnlContentFind.setLayout(new BoxLayout(pnlContentFind, BoxLayout.Y_AXIS));
+				pnlContentFind.setLayout(new BorderLayout());
 				pnlContentFind.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 				pnlContentFind.setBackground(new Color(65, 60, 60));
 					JPanel pnlCenTopTopFind = new JPanel();
-					pnlCenTopTopFind.setLayout(new BoxLayout(pnlCenTopTopFind, BoxLayout.X_AXIS));
-					Border outBorder = BorderFactory.createTitledBorder("Tìm kiếm");
-					Border inBorder = BorderFactory.createEmptyBorder(10,10,0,10);
-					Border comBorder = BorderFactory.createCompoundBorder(inBorder,outBorder);
-					pnlCenTopTopFind.setBorder(comBorder);
+					pnlCenTopTopFind.setLayout(new FlowLayout());
 					pnlCenTopTopFind.setBackground(new Color(204, 241, 157));
-						JPanel pnlSubFind_1 = new JPanel();
-						pnlSubFind_1.setLayout(new FlowLayout());
-						pnlSubFind_1.setBackground(new Color(204, 241, 157));
-						pnlSubFind_1.add(btnFindMaPhim);
-						pnlSubFind_1.add(txtFindMaPhim);
-						JPanel pnlSubFind_2 = new JPanel();
-						pnlSubFind_2.setLayout(new FlowLayout());
-						pnlSubFind_2.setBackground(new Color(204, 241, 157));
-						pnlSubFind_2.add(btnFindTenPhim);
-						pnlSubFind_2.add(txtFindTenPhim);
-					pnlCenTopTopFind.add(pnlSubFind_1);
-					pnlCenTopTopFind.add(pnlSubFind_2);
+					pnlCenTopTopFind.add(btnFind);
+					pnlCenTopTopFind.add(txtFind);
 					JPanel pnlCenCenFind = new JPanel();
 					pnlCenCenFind.setLayout(new BoxLayout(pnlCenCenFind, BoxLayout.X_AXIS));
-					pnlCenCenFind.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 					pnlCenCenFind.add(scrollFind, BorderLayout.CENTER);
-				pnlContentFind.add(pnlCenTopTopFind);
-				pnlContentFind.add(pnlCenCenFind);
+				pnlContentFind.add(pnlCenTopTopFind, BorderLayout.NORTH);
+				pnlContentFind.add(pnlCenCenFind, BorderLayout.CENTER);
 			pnlCenPhimFind.add(pnlContentFind, BorderLayout.CENTER);	
-			
+		
+		
 		// ActionListeners
 		itemDangXuat.addActionListener(new ActionListener() {
 			@Override
@@ -510,15 +485,10 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
                 btnPhong.setBackground(new Color(204, 241, 157));
                 btnKhachHang.setBackground(new Color(204, 241, 157));
                 btnNhanVien.setBackground(new Color(204, 241, 157));
-
-                pnlCenPhimFind.setVisible(false);
-                pnlCenPhimUpdate.setVisible(false);
-
-            	pnlCenMain.setVisible(true);
-            	pnlCenMain.revalidate();
-            	pnlCenMain.repaint();
+                switchPanels(pnlCenMain);
             }
         });
+		
 		UpdateFilm.addActionListener(new ActionListener() {
 			
 			@Override
@@ -526,14 +496,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 				// TODO Auto-generated method stub
 				UpdateFilm.setBackground(new Color(12, 138, 255));
 				FindFilm.setBackground(new Color(204, 241, 157));
-	            ListFilm.setBackground(new Color(204, 241, 157));
-				 
-	            pnlCenPhimFind.setVisible(false);
-            	pnlCenMain.setVisible(false);
-
-            	pnlCenPhimUpdate.setVisible(true);
-                pnlCenPhimUpdate.revalidate();
-                pnlCenPhimUpdate.repaint();
+				switchPanels(pnlCenPhimUpdate);
 			}
 		});
 		FindFilm.addActionListener(new ActionListener() {
@@ -544,13 +507,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 				FindFilm.setBackground(new Color(12, 138, 255));
 				UpdateFilm.setBackground(new Color(204, 241, 157));
 	            ListFilm.setBackground(new Color(204, 241, 157));
-				
-				pnlCenPhimUpdate.setVisible(false);
-            	pnlCenMain.setVisible(false);
-
-                pnlCenPhimFind.setVisible(true);
-                pnlCenPhimFind.revalidate();
-                pnlCenPhimFind.repaint();
+	            switchPanels(pnlCenPhimFind);
 			}
 		
 		});
@@ -568,20 +525,51 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
                 btnNhanVien.setBackground(new Color(204, 241, 157));
             }
         });
+		btnVe.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Thay đổi kích thước của nút
+                btnMain.setBackground(new Color(204, 241, 157));
+                btnPhim.setBackground(new Color(204, 241, 157));
+                btnLich.setBackground(new Color(204, 241, 157));
+                btnVe.setBackground(new Color(12, 138, 255));
+                btnPhong.setBackground(new Color(204, 241, 157));
+                btnKhachHang.setBackground(new Color(204, 241, 157));
+                btnNhanVien.setBackground(new Color(204, 241, 157));
+            }
+        });
+		
+		// Tạo Frame nhân viên
+		frmNhanVien = new FrmNhanVien();
+		pnlNV = frmNhanVien.taoFrmNhanVien();
 
-		DocDuLieuVaoTable();
+		btnNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg) {
+				switchPanels(pnlNV);
+			}
+		});
+		
+//		// Tạo Frame vé
+//		frmBanVe = new FrmBanVe();
+//		pnlVe = frmBanVe.frmVe();
+//		DonBanVe.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				switchPanels(pnlVe);
+//			}
+//		});
 
-		// LayeredPanel	
 		layeredPane.add(pnlCenMain, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimUpdate, JLayeredPane.PALETTE_LAYER); 
-		layeredPane.add(pnlCenPhimFind, JLayeredPane.PALETTE_LAYER); 
-        
+		layeredPane.add(pnlCenPhimFind, JLayeredPane.PALETTE_LAYER);
+        // Đọc dữ liệu vào bảng
+		DocDuLieuVaoTable();
+		
 		btnAdd.addActionListener(this);
 		btnDel.addActionListener(this);
 		btnUpdate.addActionListener(this);
 		btnDelAll.addActionListener(this);
-		btnFindTenPhim.addActionListener(this);
-		btnFindMaPhim.addActionListener(this);
+		btnFind.addActionListener(this);
 		tablePhimUpdate.addMouseListener(this);
 
 		pnlAll.add(layeredPane);
@@ -592,7 +580,12 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-	
+	public void switchPanels(JPanel panel) {
+		layeredPane.removeAll();
+		layeredPane.add(panel);
+		layeredPane.repaint();
+		layeredPane.revalidate();
+	}
 	 public static class PopupMenuListener implements ActionListener {
 	        private JPopupMenu popupMenu;
 	        private Component invoker;
@@ -615,13 +608,24 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 					p.getTheLoai(),p.getThoiLuong(),p.getNgayCC(),
 					p.getNgayKT(),p.getDanhGia()});		
 		}
-		tablePhimFind.setModel(modelPhim);
+		tablePhimUpdate.setModel(modelPhim);
 	}
 	public void XoaRongTable() {
 		DefaultTableModel d = (DefaultTableModel) tablePhimFind.getModel();
 		d.getDataVector().removeAllElements();
 	}
-
+	public void timPhimTheoTenPhim(String tenPhim){
+		tenPhim = tenPhim.toLowerCase();
+		List<Phim> dsPhim = phim_DAO.getAllPhim();
+		for (Phim p : dsPhim) {
+			if(p.getIdPhim().contains(tenPhim)) {
+				XoaRongTable();
+				modelPhim.addRow(new Object[] {p.getIdPhim(),p.getTenPhim(),p.getDaoDien(),
+						p.getTheLoai(),p.getThoiLuong(),p.getNgayCC(),
+						p.getNgayKT(),p.getDanhGia()});	
+			}
+		}
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		java.util.Date ngayCC = (java.util.Date) txtNgayCCPhim.getValue();
@@ -718,41 +722,17 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			}else {
 				JOptionPane.showMessageDialog(null, "Vui lòng chọn 1 dòng để xóa!");
 			}
-		}else if(o == btnFindTenPhim) {
-			String tuKhoa = txtFindTenPhim.getText();
-			ArrayList<Phim> listPhim = phim_DAO.findPhimTheoTen(tuKhoa);
-			if(tuKhoa.equals("")) {
-				JOptionPane.showMessageDialog(null, "Vui lòng nhập tên phim cần tìm!");
-			}else if(listPhim.size() == 0){
-				JOptionPane.showMessageDialog(null, "Không Tìm thấy !");
+		}else if(o == btnFind) {
+			String tuKhoa = txtFind.getText().trim();
+			if(!(tuKhoa.equals(""))) {
+				timPhimTheoTenPhim(tuKhoa);
 			}else {
 				XoaRongTable();
-				for (Phim p : listPhim) {
-					modelPhim.addRow(new Object[] {p.getIdPhim(),p.getTenPhim(),p.getDaoDien(),
-							p.getTheLoai(),p.getThoiLuong(),p.getNgayCC(),
-							p.getNgayKT(),p.getDanhGia()});	
-				}
+				DocDuLieuVaoTable();
 			}
-			tablePhimFind.setModel(modelPhim);
-		}else if(o == btnFindMaPhim) {
-			String tuKhoa = txtFindMaPhim.getText();
-			ArrayList<Phim> listPhim = phim_DAO.findPhimTheoMaPhim(tuKhoa);
-			if(tuKhoa.equals("")) {
-				JOptionPane.showMessageDialog(null, "Vui lòng nhập mã phim cần tìm!");
-			}else if(listPhim.size() == 0){
-				JOptionPane.showMessageDialog(null, "Không Tìm thấy !");
-			}else {
-				XoaRongTable();
-				for (Phim p : listPhim) {
-					modelPhim.addRow(new Object[] {p.getIdPhim(),p.getTenPhim(),p.getDaoDien(),
-							p.getTheLoai(),p.getThoiLuong(),p.getNgayCC(),
-							p.getNgayKT(),p.getDanhGia()});	
-				}
-			}
-			tablePhimFind.setModel(modelPhim);
 		}
 	}
-	public static void main(String[] args) throws IOException, SQLException {
+	public static void main(String[] args) throws IOException, SQLException, ParseException {
 		new FrmPhim();
 	}
 	@Override
