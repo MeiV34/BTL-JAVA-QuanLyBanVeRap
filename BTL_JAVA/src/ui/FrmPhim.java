@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -75,8 +76,18 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private Connection con;
 	private String[] head;
 	private JLayeredPane layeredPane = new JLayeredPane();
+	private FrmNhanVien taoFrame1;
+	private JPanel pnlNV;
 
-	public FrmPhim() throws IOException, SQLException {
+	//xóa hết các panel cũ và add panel mới vào
+	public void switchPanels(JPanel panel) {
+		layeredPane.removeAll();
+			layeredPane.add(panel);
+			layeredPane.repaint();
+			layeredPane.revalidate();
+	}
+
+	public FrmPhim() throws IOException, SQLException, ParseException {
 		super("Rạp Phim BHV");
 		// Connect 
 		ConnectDB.getInstance().connect();
@@ -568,6 +579,30 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
                 btnNhanVien.setBackground(new Color(204, 241, 157));
             }
         });
+		
+		btnNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//            	reset màu xong set lại màu btn được nhấn
+				resetTargetMenu();
+				btnNhanVien.setBackground(new Color(12, 138, 255));
+				pnlCenPhimUpdate.setVisible(false);
+            	pnlCenMain.setVisible(false);
+
+                pnlCenPhimFind.setVisible(false);
+				pnlNV.setVisible(true);
+				pnlNV.revalidate();
+	            pnlNV.repaint();
+		}
+	});
+		
+		taoFrame1 = new FrmNhanVien();
+		pnlNV =  taoFrame1.taoFrmNhanVien();
+		layeredPane.add(pnlNV);
+		btnNhanVien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			switchPanels(pnlNV);
+		}
+	});
 
 		DocDuLieuVaoTable();
 
@@ -592,6 +627,19 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
+	
+	//set lại màu cho menu, khi nhấn button nào chỉ set lại màu cho
+	//button đó thôi
+			public void resetTargetMenu() {
+				btnMain.setBackground(new Color(204, 241, 157));
+		        btnPhim.setBackground(new Color(204, 241, 157));
+		        btnLich.setBackground(new Color(204, 241, 157));
+		        btnLich.setBackground(new Color(204, 241, 157));
+		        btnVe.setBackground(new Color(204, 241, 157));
+		        btnPhong.setBackground(new Color(204, 241, 157));
+		        btnKhachHang.setBackground(new Color(204, 241, 157));
+		        btnNhanVien.setBackground(new Color(204, 241, 157));
+			}
 	
 	 public static class PopupMenuListener implements ActionListener {
 	        private JPopupMenu popupMenu;
@@ -752,7 +800,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			tablePhimFind.setModel(modelPhim);
 		}
 	}
-	public static void main(String[] args) throws IOException, SQLException {
+	public static void main(String[] args) throws IOException, SQLException, ParseException {
 		new FrmPhim();
 	}
 	@Override
