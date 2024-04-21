@@ -28,7 +28,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 	private JLabel userPasswordLabel = new JLabel("password:");
 	private JLabel messageLabel = new JLabel("THIS IS A TEST");
 	
-
 	
 	public FrmLogin(){	
 		ConnectDB.getInstance().connect();
