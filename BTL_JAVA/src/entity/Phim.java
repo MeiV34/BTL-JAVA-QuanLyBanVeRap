@@ -15,7 +15,7 @@ public class Phim {
 	private Date ngayKT;
 	private int danhGia;
 	
-	public Phim() {
+	public Phim() { 
 		super();
 	}
 
