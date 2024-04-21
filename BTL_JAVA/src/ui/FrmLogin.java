@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import connectDB.*;
+import connectDB.ConnectDB;
 
 
 public class FrmLogin extends JFrame implements ActionListener{
@@ -28,7 +28,6 @@ public class FrmLogin extends JFrame implements ActionListener{
 	private JLabel userPasswordLabel = new JLabel("password:");
 	private JLabel messageLabel = new JLabel("THIS IS A TEST");
 	
-
 	
 	public FrmLogin(){	
 		ConnectDB.getInstance().connect();
