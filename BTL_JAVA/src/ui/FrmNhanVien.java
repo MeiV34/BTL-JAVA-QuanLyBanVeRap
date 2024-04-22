@@ -267,14 +267,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		scrollPane.setViewportView(table);
 		table.setRowHeight(25);
-
-//		table.getColumnModel().getColumn(0).setPreferredWidth(70);
-//		table.getColumnModel().getColumn(1).setPreferredWidth(120);
-//		table.getColumnModel().getColumn(2).setPreferredWidth(120);
-//		table.getColumnModel().getColumn(3).setPreferredWidth(120);
-//		table.getColumnModel().getColumn(4).setPreferredWidth(80);
-//		table.getColumnModel().getColumn(5).setPreferredWidth(70);
-//		table.getColumnModel().getColumn(6).setPreferredWidth(100);
 		
 		cbxTimKiem = new JComboBox();
 		cbxTimKiem.setBounds(20, 20, 86, 34);

@@ -193,7 +193,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		DocDuLieuVaoTable();
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(1084,768);
+		pnPhong.setSize(1084,768);
 		return pnPhong;		
 						
 	}
