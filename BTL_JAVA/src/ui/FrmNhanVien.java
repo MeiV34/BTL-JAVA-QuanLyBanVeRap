@@ -95,7 +95,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private NhanVien_DAO nvDao;
 	public FrmNhanVien() throws ParseException  {
 		getContentPane().add(taoFrmNhanVien());
-		setSize(1084,768);
+		setSize(1035,682);
 	}
 	
 	public JPanel taoFrmNhanVien() {
@@ -105,7 +105,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		setLocation(250, 30);
 		
 		JPanel pnTXT=new JPanel();
-		pnTXT.setBounds(20,60,416,629);
+		pnTXT.setBounds(20,30,414,588);
 		pnTXT.setBackground(new Color(204,241,157));
 		pnTXT.setLayout(new BoxLayout(pnTXT, BoxLayout.Y_AXIS));
 		pnTXT.add(Box.createVerticalStrut(20));
@@ -241,8 +241,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pntblNV.setBackground(new Color(204, 241, 157));
 		pntblNV.setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 70, 529, 559);
-		pntblNV.setBounds(466, 60, 576, 629);
+		scrollPane.setBounds(20, 70, 515, 518);
+		pntblNV.setBounds(466, 30, 545, 588);
 		
 		pntblNV.add(scrollPane);
 		String[] header = { "Mã NV", "Tên NV", "Ngày sinh", "Số điện thoại", "Lương", "Địa chỉ",
@@ -285,7 +285,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Verdana", Font.PLAIN, 14));
 //		txtTimKiem.setColumns(20);
-		txtTimKiem.setBounds(128, 20, 340, 34);
+		txtTimKiem.setBounds(120, 20, 320, 34);
 		pntblNV.add(txtTimKiem);
 
 		btnTimKiem = new JButton();
@@ -296,8 +296,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 			}
 		});
 		btnTimKiem.setForeground(new Color(0, 0, 0));
-		btnTimKiem.setFont(new Font("Verdana", Font.PLAIN, 16));
-		btnTimKiem.setBounds(487, 20, 86, 34);
+		btnTimKiem.setBounds(459, 20, 76, 34);
 		pntblNV.add(btnTimKiem);
 		
 		btnThem.addActionListener(this);
