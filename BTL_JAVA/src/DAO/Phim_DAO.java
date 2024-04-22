@@ -11,7 +11,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-import connectDB.*;
+import connectDB.ConnectDB;
 import entity.Phim;
 
 public class Phim_DAO {
@@ -30,7 +30,7 @@ public class Phim_DAO {
 				String daoDien = rs.getString(3);
 				String theLoai = rs.getString(4);
 				int thoiLuong = rs.getInt(5);
-				// Chuyển đổi java.sql.Date thành LocalDate
+				// Chuyển đổi java.sql.Date thành java.util.Date
 				java.sql.Date sqlReleaseNgayCC = rs.getDate(6);
 				java.sql.Date sqlReleaseNgayKT = rs.getDate(7);
 				int danhGia = rs.getInt(8);
@@ -106,7 +106,7 @@ public class Phim_DAO {
 			n = state.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 		finally {
 			try {
 				state.close();
@@ -132,4 +132,61 @@ public class Phim_DAO {
 		}
 		return n > 0;
 	}
+	
+	public ArrayList<Phim> findPhimTheoTen(String tenPhim) {
+		ArrayList<Phim> listPhim = new ArrayList<Phim>();
+		ConnectDB.getInstance();
+		con = ConnectDB.getConnection();
+		int n = 0;
+		try {
+			String sql = "SELECT * FROM Phim WHERE TenPhim LIKE ?";
+			PreparedStatement state = con.prepareStatement(sql);
+			state.setString(1,"%" + tenPhim + "%");
+			ResultSet rs = state.executeQuery();
+			while(rs.next()) {
+				String id= rs.getString(1);
+				String ten= rs.getString(2);
+				String daoDien = rs.getString(3);
+				String theLoai = rs.getString(4);
+				int thoiLuong = rs.getInt(5);
+				// Chuyển đổi java.sql.Date thành LocalDate
+				java.sql.Date sqlReleaseNgayCC = rs.getDate(6);
+				java.sql.Date sqlReleaseNgayKT = rs.getDate(7);
+				int danhGia = rs.getInt(8);
+				Phim p = new Phim(id, ten, daoDien, theLoai, thoiLuong, sqlReleaseNgayCC, sqlReleaseNgayKT, danhGia);
+				listPhim.add(p);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listPhim;
+	}
+	public ArrayList<Phim> findPhimTheoMaPhim(String maPhim) {
+		ArrayList<Phim> listPhim = new ArrayList<Phim>();
+		ConnectDB.getInstance();
+		con = ConnectDB.getConnection();
+		try {
+			String sql = "SELECT * FROM Phim WHERE MaPhim = ?";
+			PreparedStatement state = con.prepareStatement(sql);
+			state.setString(1,maPhim);
+			ResultSet rs = state.executeQuery();
+			while(rs.next()) {
+				String id= rs.getString(1);
+				String ten= rs.getString(2);
+				String daoDien = rs.getString(3);
+				String theLoai = rs.getString(4);
+				int thoiLuong = rs.getInt(5);
+				// Chuyển đổi java.sql.Date thành LocalDate
+				java.sql.Date sqlReleaseNgayCC = rs.getDate(6);
+				java.sql.Date sqlReleaseNgayKT = rs.getDate(7);
+				int danhGia = rs.getInt(8);
+				Phim p = new Phim(id, ten, daoDien, theLoai, thoiLuong, sqlReleaseNgayCC, sqlReleaseNgayKT, danhGia);
+				listPhim.add(p);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return listPhim;
+	}
 }
+
