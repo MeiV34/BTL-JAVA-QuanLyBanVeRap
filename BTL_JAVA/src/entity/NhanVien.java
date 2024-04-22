@@ -5,7 +5,7 @@ import java.sql.Date;
 public class NhanVien {
 	private String maNV;
 	private String tenNV;
-	private Date ngaySinh;
+	private Date ngayVaoLam;
 	private String sdt;
 	private Double luong;
 	private String diaChi;
@@ -16,12 +16,12 @@ public class NhanVien {
 	public NhanVien() {
 		super();
 	}
-	public NhanVien(String maNV, String tenNV, Date ngaySinh, String sdt, Double luong, String diaChi, String email,
+	public NhanVien(String maNV, String tenNV, Date ngayVaoLam, String sdt, Double luong, String diaChi, String email,
 			String chucVu, String tenDN, String matKhau) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
-		this.ngaySinh = ngaySinh;
+		this.ngayVaoLam = ngayVaoLam;
 		this.sdt = sdt;
 		this.luong = luong;
 		this.diaChi = diaChi;
@@ -42,11 +42,11 @@ public class NhanVien {
 	public void setTenNV(String tenNV) {
 		this.tenNV = tenNV;
 	}
-	public Date getNgaySinh() {
-		return ngaySinh;
+	public Date getNgayVaoLam() {
+		return ngayVaoLam;
 	}
-	public void setNgaySinh(Date ngaySinh) {
-		this.ngaySinh = ngaySinh;
+	public void setNgayVaoLam(Date ngaySinh) {
+		this.ngayVaoLam = ngaySinh;
 	}
 	public String getSdt() {
 		return sdt;
@@ -92,7 +92,7 @@ public class NhanVien {
 	}
 	@Override
 	public String toString() {
-		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", ngaySinh=" + ngaySinh + ", sdt=" + sdt + ", luong="
+		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", ngayVaoLam=" + ngayVaoLam + ", sdt=" + sdt + ", luong="
 				+ luong + ", diaChi=" + diaChi + ", email=" + email + ", chucVu=" + chucVu + ", tenDN=" + tenDN
 				+ ", matKhau=" + matKhau + "]";
 	}

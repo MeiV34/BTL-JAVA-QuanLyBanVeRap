@@ -1,15 +1,17 @@
 package entity;
 
+import java.util.Objects;
+
 public class Phong {
     private String maPhong;
-    private int soPhong;
-	public Phong() {
-		super();
-	}
-	public Phong(String maPhong, int soPhong) {
+    private String tenPhong;
+    private int soLuongGhe;
+    
+	public Phong(String maPhong, String tenPhong, int soLuongGhe) {
 		super();
 		this.maPhong = maPhong;
-		this.soPhong = soPhong;
+		this.tenPhong = tenPhong;
+		this.soLuongGhe = soLuongGhe;
 	}
 	public String getMaPhong() {
 		return maPhong;
@@ -17,15 +19,33 @@ public class Phong {
 	public void setMaPhong(String maPhong) {
 		this.maPhong = maPhong;
 	}
-	public int getSoPhong() {
-		return soPhong;
+	public String getTenPhong() {
+		return tenPhong;
 	}
-	public void setSoPhong(int soPhong) {
-		this.soPhong = soPhong;
+	public void setTenPhong(String tenPhong) {
+		this.tenPhong = tenPhong;
+	}
+	public int getSoLuongGhe() {
+		return soLuongGhe;
+	}
+	public void setSoLuongGhe(int soLuongGhe) {
+		this.soLuongGhe = soLuongGhe;
 	}
 	@Override
-	public String toString() {
-		return "Phong [maPhong=" + maPhong + ", soPhong=" + soPhong + "]";
+	public int hashCode() {
+		return Objects.hash(maPhong);
 	}
-    
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Phong other = (Phong) obj;
+		return Objects.equals(maPhong, other.maPhong);
+	}
+	
+	
 }
