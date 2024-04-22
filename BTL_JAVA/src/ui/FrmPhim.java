@@ -326,7 +326,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
         btnLich.addActionListener(new PopupMenuListener(lichChieu, btnLich));
         btnVe.addActionListener(new PopupMenuListener(Ve, btnVe));
         btnPhong.addActionListener(new PopupMenuListener(Phong, btnPhong));
-        btnKhachHang.addActionListener(new PopupMenuListener(KhachHang, btnKhachHang));
+        btnKhachHang.addActionListener(this);
         btnNhanVien.addActionListener(this);
  		
 		//Top
@@ -547,21 +547,26 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
                 btnPhim.setBackground(new Color(12, 138, 255));
             }
         });
+		JPanel pnlKH = new FrmKhachHang().taoFrmKhachHang();
+		btnKhachHang.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+//            	reset màu xong set lại màu btn được nhấn
+				resetTargetMenu();
+				switchPanels(pnlKH);
+//				pnlKH.revalidate();
+//	            pnlKH.repaint();
+		}
+	});
 		taoFrame1 = new FrmNhanVien();
 		pnlNV =  taoFrame1.taoFrmNhanVien();
-//		layeredPane.add(pnlNV);
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 //            	reset màu xong set lại màu btn được nhấn
 				resetTargetMenu();
 				btnNhanVien.setBackground(new Color(12, 138, 255));
-				pnlCenPhimUpdate.setVisible(false);
-            	pnlCenMain.setVisible(false);
-
-                pnlCenPhimFind.setVisible(false);
-				pnlNV.setVisible(true);
-				pnlNV.revalidate();
-	            pnlNV.repaint();
+				switchPanels(pnlNV);
+//				pnlNV.revalidate();
+//	            pnlNV.repaint();
 		}
 	});
 		

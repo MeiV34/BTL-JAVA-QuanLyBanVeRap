@@ -10,6 +10,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,11 +20,13 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -49,14 +52,15 @@ import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import java.awt.Dimension;
+import javax.swing.JComboBox;
 
 public class FrmNhanVien extends JFrame implements ActionListener,MouseListener {
 	private JLabel lblMaNV;
 	private JTextField txtMaNV;
 	private JLabel lblTenNV;
 	private JTextField txtTenNV;
-	private JLabel lblNgaySinh;
-	private JDateChooser txtNgaySinh;
+	private JLabel lblNgayVaoLam;
+	private JDateChooser txtNgayVaoLam;
 	private JLabel lblSDT;
 	private JTextField txtSDT;
 	private JLabel lblLuong;
@@ -66,7 +70,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private JLabel lblMail;
 	private JTextField txtMail;
 	private JLabel lblChucVu;
-	private JTextField txtChucVu;
+	private JComboBox cbxChucVu;
+	private JComboBox cbxTimKiem;
 	private JButton btnThem;
 	private JButton btnXoa;
 	private JButton btnSua;
@@ -89,7 +94,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private List<NhanVien> dsNV;
 	private NhanVien_DAO nvDao;
 	public FrmNhanVien() throws ParseException  {
-		add(taoFrmNhanVien());
+		getContentPane().add(taoFrmNhanVien());
 		setSize(1084,768);
 	}
 	
@@ -128,8 +133,9 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		flowLayout_2.setVgap(0);
 		flowLayout_2.setHgap(70);
 		pnNgaySinh.setBackground(new Color(204, 241, 157));
-		pnNgaySinh.add(lblNgaySinh=new JLabel("Ngày sinh"));
-		pnNgaySinh.add(txtNgaySinh=new JDateChooser());
+		pnNgaySinh.add(lblNgayVaoLam=new JLabel("Ngày vào làm"));
+		pnNgaySinh.add(txtNgayVaoLam=new JDateChooser());
+		txtNgayVaoLam.setDateFormatString("dd-MM-yyyy");
 //		JFormattedTextField txtNgaySinh=new JFormattedTextField(new MaskFormatter("dd/MM/yyyy"));
 		
 		pnTXT.add(pnNgaySinh);
@@ -140,7 +146,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		flowLayout_3.setHgap(70);
 		pnSDT.setBackground(new Color(204, 241, 157));
 		pnSDT.add(lblSDT=new JLabel("Số điện thoại	"));
-		pnSDT.add(txtSDT=new JTextField(15));
+		pnSDT.add(txtSDT=new JTextField(14));
 		pnTXT.add(pnSDT);
 
 		JPanel pnLuong=new JPanel();
@@ -176,7 +182,11 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		flowLayout_7.setHgap(70);
 		pnChucVu.setBackground(new Color(204, 241, 157));
 		pnChucVu.add(lblChucVu=new JLabel("Chức vụ"));
-		pnChucVu.add(txtChucVu=new JTextField(15));
+//		pnChucVu.add(txtChucVu=new JTextField(15));
+		cbxChucVu=new JComboBox();
+		cbxChucVu.setModel(new DefaultComboBoxModel(new String[] {"Quản lý","Nhân viên"}));
+		cbxChucVu.setBackground(new Color(255,255,255));
+		pnChucVu.add(cbxChucVu);
 		pnTXT.add(pnChucVu);
 		pnTXT.add(Box.createVerticalStrut(40));
 		
@@ -217,14 +227,15 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		
 		
 		
-		lblMaNV.setPreferredSize(new Dimension(58, 13));
+		lblMaNV.setPreferredSize(lblSDT.getPreferredSize());
 		lblTenNV.setPreferredSize(lblSDT.getPreferredSize());
-		lblNgaySinh.setPreferredSize(new Dimension(58, 13));
+//		lblNgayVaoLam.setPreferredSize(lblSDT.getPreferredSize());
 		lblLuong.setPreferredSize(lblSDT.getPreferredSize());
 		lblDC.setPreferredSize(lblSDT.getPreferredSize());
 		lblMail.setPreferredSize(lblSDT.getPreferredSize());
 		lblChucVu.setPreferredSize(lblSDT.getPreferredSize());
-		txtNgaySinh.setPreferredSize(txtMaNV.getPreferredSize());
+		txtNgayVaoLam.setPreferredSize(txtSDT.getPreferredSize());
+		cbxChucVu.setPreferredSize(txtSDT.getPreferredSize());
 		
 		JPanel pntblNV=new JPanel();
 		pntblNV.setBackground(new Color(204, 241, 157));
@@ -265,10 +276,16 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 //		table.getColumnModel().getColumn(5).setPreferredWidth(70);
 //		table.getColumnModel().getColumn(6).setPreferredWidth(100);
 		
+		cbxTimKiem = new JComboBox();
+		cbxTimKiem.setBounds(20, 20, 86, 34);
+		cbxTimKiem.setBackground(new Color(255, 255, 255));
+		cbxTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Tìm kiếm theo", "Tên nhân viên", "Mã nhân viên", "Chức vụ"}));
+		pntblNV.add(cbxTimKiem);
+		
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Verdana", Font.PLAIN, 14));
 //		txtTimKiem.setColumns(20);
-		txtTimKiem.setBounds(113, 20, 340, 34);
+		txtTimKiem.setBounds(128, 20, 340, 34);
 		pntblNV.add(txtTimKiem);
 
 		btnTimKiem = new JButton();
@@ -280,10 +297,14 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		});
 		btnTimKiem.setForeground(new Color(0, 0, 0));
 		btnTimKiem.setFont(new Font("Verdana", Font.PLAIN, 16));
-		btnTimKiem.setBounds(487, 19, 86, 34);
+		btnTimKiem.setBounds(487, 20, 86, 34);
 		pntblNV.add(btnTimKiem);
 		
+		btnThem.addActionListener(this);
+		btnXoa.addActionListener(this);
+		btnSua.addActionListener(this);
 		btnLamMoi.addActionListener(this);
+		btnTimKiem.addActionListener(this);
 		table.addMouseListener(this);
 		
 		pn_NV.add(pnTXT);
@@ -300,7 +321,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 			// Format ngay
 			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			String ngaySinh = dateFormat.format(nv.getNgaySinh());
+			String ngaySinh = dateFormat.format(nv.getNgayVaoLam());
 
 			// format tien
 
@@ -312,6 +333,76 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 					nv.getEmail(), nv.getChucVu()});
 			
 		}
+	}
+	public void docDuLieuTimKiemVaoTable(int i,String str) {
+		int row=modelDanhSachNV.getRowCount();
+		for (int j = row-1; j>= 0; j--) {
+			modelDanhSachNV.removeRow(j);
+		}
+		if(i==1) {
+			dsNV =nvDao.timTheoTen_VerK(str);
+			
+		}
+		if(i==2) {
+			dsNV =nvDao.timTheoMa_VerK(str);
+//			int row=modelDanhSachNV.getRowCount();
+//			for (int j = row-1; j>= 0; j--) {
+//				modelDanhSachNV.removeRow(j);
+//			}
+		}
+		if(i==3) {
+			dsNV =nvDao.timTheoChucVu_VerK(str);
+//			int row=modelDanhSachNV.getRowCount();
+//			for (int j = row-1; j>= 0; j--) {
+//				modelDanhSachNV.removeRow(j);
+//			}
+		}
+		for (NhanVien nv : dsNV) {
+			// Format ngay
+			Date date = Calendar.getInstance().getTime();
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String ngaySinh = dateFormat.format(nv.getNgayVaoLam());
+
+			// format tien
+
+			Locale locale = new Locale("vn", "VN");
+			NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
+			String moneyString = formatter.format(nv.getLuong());
+			modelDanhSachNV.addRow(new Object[] { nv.getMaNV(), nv.getTenNV(),ngaySinh,
+					nv.getSdt(), moneyString, nv.getDiaChi(),
+					nv.getEmail(), nv.getChucVu()});
+			
+		}
+	}
+	private boolean valid() {
+		if(txtMaNV.getText().equals("") || txtTenNV.getText().equals("") || txtNgayVaoLam.getDate().equals("") || 
+				txtSDT.getText().equals("") || txtLuong.getText().equals("") ||txtDC.getText().equals("") || 
+				txtMail.getText().equals("")) {
+						JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+						return false;
+					}
+		
+		if(txtMaNV.getText().charAt(0) != 'N' || txtMaNV.getText().charAt(1) != 'V') {
+			JOptionPane.showMessageDialog(this, "Qui tắc đặt mã nhân viên: NV + number");
+			return false;
+		}
+		if(txtSDT.getText().length()!=10) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại phải có 10 chữ số");
+			return false;
+		}
+		
+		if(Integer.parseInt(txtLuong.getText())<=0 ) {
+			JOptionPane.showMessageDialog(this, "Lương nhân viên phải >0");
+			return false;
+		}
+		Date selectedDate = txtNgayVaoLam.getDate();
+		LocalDate datachoserDate = LocalDate.ofInstant(selectedDate.toInstant(),ZoneId.systemDefault());
+        LocalDate ngayHienTai = LocalDate.now();
+		if(datachoserDate.isAfter(ngayHienTai)) {
+			JOptionPane.showMessageDialog(this, "Ngày vào làm phải trước ngày hiện tại");
+			return false;
+		}
+		return true;
 	}
 
 	public static void main(String[] args) {
@@ -325,15 +416,148 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o=e.getSource();
-		if(o.equals(btnLamMoi)) {
+		if(o.equals(btnThem)) {
+			if(valid()) {
+				dsNV=nvDao.getAllNV();
+				for (NhanVien nv : dsNV) {
+					if(nv.getMaNV().equals(txtMaNV.getText())) {
+						JOptionPane.showMessageDialog(this,"Trùng mã nhân viên!");
+						txtMaNV.requestFocus();
+						txtMaNV.selectAll();
+						return;
+					}
+				}
+				int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm nhân viên này không?", "Cảnh báo",
+						JOptionPane.YES_NO_OPTION);
+				if (n == 0) {
+					NhanVien nv = new NhanVien();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String strNgayVaoLam = dateFormat.format(txtNgayVaoLam.getDate());
+					java.sql.Date ngayVaoLam = java.sql.Date.valueOf(strNgayVaoLam);
+					
+					nv.setMaNV(txtMaNV.getText());
+					nv.setTenNV(txtTenNV.getText());
+					nv.setNgayVaoLam(ngayVaoLam);
+					nv.setSdt(txtSDT.getText());
+					nv.setLuong(Double.parseDouble(txtLuong.getText()));
+					nv.setDiaChi(txtDC.getText());
+					nv.setEmail(txtMail.getText());
+					nv.setChucVu(cbxChucVu.getSelectedItem().toString());
+					if(nvDao.themNhanVien(nv)) {
+						JOptionPane.showMessageDialog(this, "Thêm thành công");
+						docDuLieuDatabaseVaoTable();
+					}
+				}
+			}
+		} else if(o.equals(btnXoa)) {
+			dsNV = nvDao.getAllNV();
+			String maDB = "";
+			int index = 0;
+			for(NhanVien x: dsNV) {
+				if(x.getMaNV().equals(txtMaNV.getText() )) {
+					index++;
+					break;
+				}
+			}
+			if(index == 0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy mã nhân viên cần sửa!!");
+				txtMaNV.requestFocus();
+				txtMaNV.selectAll();
+				return;
+			} else {
+				for(NhanVien x: dsNV) {
+					if(x.getMaNV().equals(txtMaNV.getText() )) {
+						maDB = x.getMaNV();
+						break;
+					}
+				}
+			}
+			int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn sửa thông tin"
+					+ " nhân viên với mã nhân viên là " +maDB+ " không?", "Cảnh báo",
+					JOptionPane.YES_NO_OPTION);
+			if(n==0) {
+				if(nvDao.xoaNhanVien(txtMaNV.getText())) {
+					JOptionPane.showMessageDialog(this,"Xóa thành công");
+					docDuLieuDatabaseVaoTable();
+				}
+			}
+		} else if(o.equals(btnSua)) {
+			if(valid()) {
+				dsNV = nvDao.getAllNV();
+				String nameDB = "";
+				String maDB = "";
+				int index = 0;
+				for(NhanVien x: dsNV) {
+					if(x.getMaNV().equals(txtMaNV.getText() )) {
+						index++;
+						break;
+					}
+				}
+				if(index == 0) {
+					JOptionPane.showMessageDialog(this, "Không tìm thấy mã nhân viên cần sửa!!");
+					txtMaNV.requestFocus();
+					txtMaNV.selectAll();
+					return;
+				} else {
+					for(NhanVien x: dsNV) {
+						if(x.getMaNV().equals(txtMaNV.getText() )) {
+							nameDB=x.getTenNV();
+							maDB = x.getMaNV();
+							break;
+						}
+					}
+				}
+				int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn sửa thông tin"
+						+ " nhân viên " + nameDB + "\n với mã nhân viên là " +maDB+ " không?", "Cảnh báo",
+						JOptionPane.YES_NO_OPTION);
+				if (n == 0) {
+					NhanVien nv = new NhanVien();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String strNgayVaoLam = dateFormat.format(txtNgayVaoLam.getDate());
+					java.sql.Date ngayVaoLam = java.sql.Date.valueOf(strNgayVaoLam);
+					
+					nv.setMaNV(txtMaNV.getText());
+					nv.setTenNV(txtTenNV.getText());
+					nv.setNgayVaoLam(ngayVaoLam);
+					nv.setSdt(txtSDT.getText());
+					nv.setLuong(Double.parseDouble(txtLuong.getText()));
+					nv.setDiaChi(txtDC.getText());
+					nv.setEmail(txtMail.getText());
+					nv.setChucVu(cbxChucVu.getSelectedItem().toString());
+					if(nvDao.capNhat(txtMaNV.getText(),nv)) {
+						JOptionPane.showMessageDialog(this, "Sửa thành công");
+						docDuLieuDatabaseVaoTable();
+					}
+				}
+			}
+		} else if(o.equals(btnLamMoi)) {
 			txtMaNV.setText("");
 			txtTenNV.setText("");
-			txtNgaySinh.setDate(null);
+			txtNgayVaoLam.setDate(null);
 			txtSDT.setText("");
 			txtLuong.setText("");
 			txtDC.setText("");
 			txtMail.setText("");
-			txtChucVu.setText("");
+			cbxChucVu.setSelectedIndex(0);
+		}else if(o.equals(btnTimKiem)) {
+			if(cbxTimKiem.getSelectedIndex()==0) {
+				docDuLieuDatabaseVaoTable();
+			}else if(cbxTimKiem.getSelectedIndex()==1) {
+				if(txtTimKiem.getText().equalsIgnoreCase(""))
+					JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
+				else
+					docDuLieuTimKiemVaoTable(1,txtTimKiem.getText());
+			}else if(cbxTimKiem.getSelectedIndex()==2) {
+				if(txtTimKiem.getText().equalsIgnoreCase(""))
+					JOptionPane.showMessageDialog(this,"Vui lòng nhập mã nhân viên");
+				else
+					docDuLieuTimKiemVaoTable(2,txtTimKiem.getText());
+			}else if(cbxTimKiem.getSelectedIndex()==3) {
+				if(txtTimKiem.getText().equalsIgnoreCase(""))
+					JOptionPane.showMessageDialog(this,"Vui lòng nhập chức vụ");
+				else
+					docDuLieuTimKiemVaoTable(3,txtTimKiem.getText());
+			}
 		}
 		
 	}
@@ -346,7 +570,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		Date date;
 		try {
 			date = new SimpleDateFormat("dd-MM-yyyy").parse(modelDanhSachNV.getValueAt(row, 2).toString());
-			txtNgaySinh.setDate(date);
+			txtNgayVaoLam.setDate(date);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -356,17 +580,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtLuong.setText(modelDanhSachNV.getValueAt(row, 4).toString());
 		txtDC.setText(modelDanhSachNV.getValueAt(row, 5).toString());
 		txtMail.setText(modelDanhSachNV.getValueAt(row, 6).toString());
-		txtChucVu.setText(modelDanhSachNV.getValueAt(row, 7).toString());
-		
-//		// Lấy giá trị từ cột 5 và cột 6 của hàng được chọn (cột ngày công chiếu và ngày kết thúc)
-//		Date ngayCongChieu = (Date) tablePhimUpdate.getModel().getValueAt(row, 5);
-//		Date ngayKetThuc = (Date) tablePhimUpdate.getModel().getValueAt(row, 6);
-//
-//		// Thiết lập giá trị cho JSpinner
-//		txtNgayCCPhim.setValue(ngayCongChieu);
-//		txtNgayKTPhim.setValue(ngayKetThuc);
-//		
-//		txtDanhGiaPhim.setText(modelPhim.getValueAt(row, 7).toString()); 	
+		cbxChucVu.setSelectedIndex((modelDanhSachNV.getValueAt(row, 7).toString()).equalsIgnoreCase("Quản lý") ? 0:1);
+		 	
 	}
 
 	@Override

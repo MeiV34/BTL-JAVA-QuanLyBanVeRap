@@ -28,20 +28,20 @@ public class NhanVien_DAO {
 	 * @return true nếu thêm thành công và false nếu thêm thất bại
 	 */
 	public boolean themNhanVien(NhanVien nv) {
-		String sql = "insert into NhanVien values(?,?,?,?,?,?,?,?)";
+		String sql = "insert into NhanVien values(?,?,?,?,?,?,?,?,?,?)";
 		int n;
 		try {
 			PreparedStatement stmt = ketNoi.prepareStatement(sql);
 			stmt.setString(1, nv.getMaNV());
 			stmt.setString(2, nv.getTenNV());
-			stmt.setDate(3,(Date) nv.getNgaySinh());
-			stmt.setString(4,  nv.getSdt());
-			stmt.setDouble(5, nv.getLuong());
+			stmt.setString(3, nv.getChucVu());
+			stmt.setDouble(4, nv.getLuong());
+			stmt.setString(5, nv.getEmail());
 			stmt.setString(6, nv.getDiaChi());
-			stmt.setString(7, nv.getEmail());
-			stmt.setString(8, nv.getChucVu());
-			stmt.setString(7, nv.getTenDN());
-			stmt.setString(8, nv.getMatKhau());
+			stmt.setString(7,  nv.getSdt());
+			stmt.setDate(8,(Date) nv.getNgayVaoLam());
+			stmt.setString(9, nv.getTenDN());
+			stmt.setString(10, nv.getMatKhau());
 			try {
 				n = stmt.executeUpdate();
 				if (n > 0)
@@ -89,40 +89,37 @@ public class NhanVien_DAO {
 //		return nv;
 //	}
 	
-	/**
-	 * Hàm cập nhật thông tin nhân viên
-	 * @param maNhanVien
-	 * @param nv
-	 * @return true nếu cập nhật thành công và false nếu thất bại
-	 */
-//	public boolean capNhat(String maNhanVien ,NhanVien nv) {
-//		int n = 0;
-//		PreparedStatement stmt = null;
-//		try {
-//			stmt = ketNoi.prepareStatement("update NhanVien set TenNhanVien = ?, GioiTinh = ?, NgaySinh = ?"
-//					+ ",BoPhan = ?, NgayVaoLam = ?, NgoaiNgu = ? where MaNhanVien = ?");
-//			stmt.setString(1, nv.getTenNhanVien());
-//			stmt.setString(2, nv.getGioiTinh());
-//			stmt.setDate(3, (Date) nv.getNgaySinh());
-//			stmt.setString(4, nv.getBoPhan());
-//			stmt.setDate(5, (Date) nv.getNgayVaoLam());
-//			stmt.setString(6, nv.getNgoaiNgu());
-//			stmt.setString(7, maNhanVien);
-//			n = stmt.executeUpdate();
-//		}  catch (SQLException ex) {
-//			// TODO: handle exception
-//			ex.printStackTrace();
-//		} finally {
-//			try {
-//				stmt.close();
-//			} catch (Exception e2) {
-//				// TODO: handle exception
-//				e2.printStackTrace();
-//			}
-//
-//		}
-//		return n > 0;
-//	}
+	public boolean capNhat(String maNhanVien ,NhanVien nv) {
+		int n = 0;
+		PreparedStatement stmt = null;
+		try {
+			stmt = ketNoi.prepareStatement("update NhanVien set HoTen = ?, ChucVu = ?, Luong = ?"
+					+ ",Email = ?, DiaChi = ?, Sdt = ?, NgayVaoLam = ?, TenTaiKhoan = ?, MatKhau = ? where MaNhanVien = ?");
+			stmt.setString(1, nv.getTenNV());
+			stmt.setString(2, nv.getChucVu());
+			stmt.setDouble(3, nv.getLuong());
+			stmt.setString(4, nv.getEmail());
+			stmt.setString(5, nv.getDiaChi());
+			stmt.setString(6, nv.getSdt());
+			stmt.setDate(7, (Date) nv.getNgayVaoLam());
+			stmt.setString(8, nv.getTenDN());
+			stmt.setString(9, nv.getMatKhau());
+			stmt.setString(10, maNhanVien);
+			n = stmt.executeUpdate();
+		}  catch (SQLException ex) {
+			// TODO: handle exception
+			ex.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+
+		}
+		return n > 0;
+	}
 	
 //	public NhanVien getNhanVien(String maNhanVien) {
 //		NhanVien nv = new NhanVien();
@@ -149,94 +146,88 @@ public class NhanVien_DAO {
 //		return nv;
 //	}
 	
-	/**
-	 * Tìm nhân viên theo mã nhân viên. verion:K
-	 * @param maNhanVien
-	 * @return
-	 */
-//	public List<NhanVien> timTheoMa_VerK(String maNhanVien) {
-//		dsNV = new ArrayList<NhanVien>();
-//		NhanVien nv = new NhanVien();
-//		PreparedStatement stmt = null;
-//		String sql = "Select * from NhanVien where MaNhanVien = '" + maNhanVien +"'";
-//		try {
-//			stmt = ketNoi.prepareStatement(sql);
-//			ResultSet rs = stmt.executeQuery();
-//			while(rs.next()) {
-//
-//				nv.setMaNhanVien(rs.getString("MaNhanVien"));
-//				nv.setTenNhanVien(rs.getString("TenNhanVien"));
-//				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
-//				nv.setGioiTinh(rs.getString("GioiTinh"));
-//				nv.setNgaySinh(rs.getDate("NgaySinh"));
-//				nv.setBoPhan(rs.getString("BoPhan"));
-//				nv.setNgoaiNgu(rs.getString("NgoaiNgu"));
-//				dsNV.add(nv);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return dsNV;
-//	}
+	public List<NhanVien> timTheoMa_VerK(String maNhanVien) {
+		dsNV = new ArrayList<NhanVien>();
+		NhanVien nv = new NhanVien();
+		PreparedStatement stmt = null;
+		String sql = "Select * from NhanVien where MaNhanVien = '" + maNhanVien +"'";
+		try {
+			stmt = ketNoi.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+
+				nv.setMaNV(rs.getString("MaNhanVien"));
+				nv.setTenNV(rs.getString("HoTen"));
+				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
+				nv.setSdt(rs.getString("Sdt"));
+				nv.setLuong(Double.parseDouble(rs.getString("Luong")));
+				nv.setDiaChi(rs.getString("DiaChi"));
+				nv.setEmail(rs.getString("Email"));
+				nv.setChucVu(rs.getString("ChucVu"));
+				dsNV.add(nv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dsNV;
+	}
 	
-	/**
-	 * Tìm nhân viên theo tên nhân viên. Version: K
-	 * @param tenNhanVien
-	 * @return
-	 */
-//	public List<NhanVien> timTheoTen_VerK(String tenNhanVien) {
-//		dsNV = new ArrayList<NhanVien>();
-//		NhanVien nv = new NhanVien();
-//		PreparedStatement stmt = null;
-//		String sql = "Select * from NhanVien where TenNhanVien = N'" + tenNhanVien +"'";
-//		try {
-//			stmt = ketNoi.prepareStatement(sql);
-//			ResultSet rs = stmt.executeQuery();
-//			while(rs.next()) {
-//
-//				nv.setMaNhanVien(rs.getString("MaNhanVien"));
-//				nv.setTenNhanVien(rs.getString("TenNhanVien"));
-//				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
-//				nv.setGioiTinh(rs.getString("GioiTinh"));
-//				nv.setNgaySinh(rs.getDate("NgaySinh"));
-//				nv.setBoPhan(rs.getString("BoPhan"));
-//				nv.setNgoaiNgu(rs.getString("NgoaiNgu"));
-//				dsNV.add(nv);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return dsNV;
-//	}
+	public List<NhanVien> timTheoTen_VerK(String tenNhanVien) {
+		dsNV = new ArrayList<NhanVien>();
+		
+		PreparedStatement stmt = null;
+		String sql = "Select * from NhanVien where HoTen = N'" + tenNhanVien +"'";
+		try {
+			stmt = ketNoi.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				NhanVien nv = new NhanVien();
+				nv.setMaNV(rs.getString("MaNhanVien"));
+				nv.setTenNV(rs.getString("HoTen"));
+				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
+				nv.setSdt(rs.getString("Sdt"));
+				nv.setLuong(Double.parseDouble(rs.getString("Luong")));
+				nv.setDiaChi(rs.getString("DiaChi"));
+				nv.setEmail(rs.getString("Email"));
+				nv.setChucVu(rs.getString("ChucVu"));
+				dsNV.add(nv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dsNV;
+	}
 	
 	/**
 	 * Tìm nhân viên theo bộ phận. Version:K
 	 * @param boPhan
 	 * @return
 	 */
-//	public List<NhanVien> timTheoBoPhan_VerK(String boPhan) {
-//		dsNV = new ArrayList<NhanVien>();
-//		PreparedStatement stmt = null;
-//		String sql = "Select * from NhanVien where BoPhan = N'" + boPhan +"'";
-//		try {
-//			stmt = ketNoi.prepareStatement(sql);
-//			ResultSet rs = stmt.executeQuery();
-//			while(rs.next()) {
-//				NhanVien nv = new NhanVien();
-//				nv.setMaNhanVien(rs.getString("MaNhanVien"));
-//				nv.setTenNhanVien(rs.getString("TenNhanVien"));
-//				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
-//				nv.setGioiTinh(rs.getString("GioiTinh"));
-//				nv.setNgaySinh(rs.getDate("NgaySinh"));
-//				nv.setBoPhan(rs.getString("BoPhan"));
-//				nv.setNgoaiNgu(rs.getString("NgoaiNgu"));
-//				dsNV.add(nv);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return dsNV;
-//	}
+	public List<NhanVien> timTheoChucVu_VerK(String ChucVu) {
+		dsNV = new ArrayList<NhanVien>();
+		
+		PreparedStatement stmt = null;
+		String sql = "Select * from NhanVien where ChucVu = N'"+ ChucVu +"'";
+		try {
+			stmt = ketNoi.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				NhanVien nv=new NhanVien();
+				nv.setMaNV(rs.getString("MaNhanVien"));
+				nv.setTenNV(rs.getString("HoTen"));
+				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
+				nv.setSdt(rs.getString("Sdt"));
+				nv.setLuong(Double.parseDouble(rs.getString("Luong")));
+				nv.setDiaChi(rs.getString("DiaChi"));
+				nv.setEmail(rs.getString("Email"));
+				nv.setChucVu(rs.getString("ChucVu"));
+				dsNV.add(nv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return dsNV;
+	}
 
 	
 	
@@ -285,10 +276,10 @@ public class NhanVien_DAO {
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
 //				SanPham sp = new SanPham(rs.getString("MaSanPham"));
-				nv.setMaNV(rs.getString("MaNV"));
-				nv.setTenNV(rs.getString("TenNV"));
-				nv.setNgaySinh(rs.getDate("NgaySinh"));
-				nv.setSdt(rs.getString("SDT"));
+				nv.setMaNV(rs.getString("MaNhanVien"));
+				nv.setTenNV(rs.getString("HoTen"));
+				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
+				nv.setSdt(rs.getString("Sdt"));
 				nv.setLuong(rs.getDouble("Luong"));
 				nv.setDiaChi(rs.getString("DiaChi"));
 				nv.setEmail(rs.getString("Email"));
