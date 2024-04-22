@@ -47,7 +47,8 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 	private JButton btnTimKiem;
 	private Phong_DAO phongDAO = new Phong_DAO();
 	public FrmPhong() throws ParseException  {
-		add(taoFrmPhong());
+		getContentPane().add(taoFrmPhong());
+		setSize(1035,682);
 	}
 	
 	public static void main(String[] args) {
