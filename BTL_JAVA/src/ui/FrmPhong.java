@@ -76,7 +76,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		
 		//JPanel Form - left
 		JPanel pnTXT=new JPanel();
-		pnTXT.setBounds(20,60,416,629);
+		pnTXT.setBounds(20,30,414,588);
 		pnTXT.setBackground(new Color(204,241,157));
 		
 		//left-input
@@ -140,8 +140,8 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		pnTable.setBackground(new Color(204, 241, 157));
 		pnTable.setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 70, 529, 559);
-		pnTable.setBounds(466, 60, 576, 629);
+		scrollPane.setBounds(20, 70, 515, 518);
+		pnTable.setBounds(466, 30, 545, 588);
 		
 		pnTable.add(scrollPane);
 		String[] header = { "Mã phòng", "Tên phòng", "Số lượng ghế"};
@@ -164,7 +164,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		table.setRowHeight(25);
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Verdana", Font.PLAIN, 14));
-		txtTimKiem.setBounds(113, 20, 340, 34);
+		txtTimKiem.setBounds(120, 20, 320, 34);
 		pnTable.add(txtTimKiem);
 
 		btnTimKiem = new JButton();
@@ -176,7 +176,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		});
 		btnTimKiem.setForeground(new Color(0, 0, 0));
 		btnTimKiem.setFont(new Font("Verdana", Font.PLAIN, 16));
-		btnTimKiem.setBounds(487, 19, 86, 34);
+		btnTimKiem.setBounds(459, 20, 76, 34);
 		pnTable.add(btnTimKiem);
 		
 		pnPhong.add(pnTXT);
