@@ -28,6 +28,9 @@ import java.awt.Font;
 import javax.swing.Box;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -66,10 +69,11 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private JButton btnTimKiem;
 	private List<NhanVien> dsNV;
 	private NhanVien_DAO nvDao;
-	private JTextField txtTK;
-	private JLabel lblTK;
 	private JLabel lblMK;
 	private JTextField txtMK;
+	private String hidePass;
+	private JLabel lblMKOld;
+	private JTextField txtMKOld;
 	public FrmNhanVien() throws ParseException  {
 		getContentPane().add(taoFrmNhanVien());
 		setSize(1035,682);
@@ -165,15 +169,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pnChucVu.add(cbxChucVu);
 		pnTXT.add(pnChucVu);
 		
-		JPanel pnTaiKhoan=new JPanel();
-		FlowLayout flowLayout_8 = (FlowLayout) pnTaiKhoan.getLayout();
-		flowLayout_8.setVgap(0);
-		flowLayout_8.setHgap(70);
-		pnTaiKhoan.setBackground(new Color(204, 241, 157));
-		pnTaiKhoan.add(lblTK=new JLabel("Tài khoản"));
-		pnTaiKhoan.add(txtTK=new JTextField(15));
-		pnTXT.add(pnTaiKhoan);
-		
 		JPanel pnMatKhau=new JPanel();
 		FlowLayout flowLayout_9 = (FlowLayout) pnMatKhau.getLayout();
 		flowLayout_9.setVgap(0);
@@ -183,6 +178,19 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pnMatKhau.add(txtMK=new JTextField(15));
 		pnTXT.add(pnMatKhau);
 		pnTXT.add(Box.createVerticalStrut(40));
+		
+		JPanel pnMatKhauOld=new JPanel();
+		FlowLayout flowLayout_10 = (FlowLayout) pnMatKhau.getLayout();
+		flowLayout_10.setVgap(0);
+		flowLayout_10.setHgap(70);
+		pnMatKhauOld.setBackground(new Color(204, 241, 157));
+		pnMatKhauOld.add(lblMKOld=new JLabel("Nhập mật khẩu cũ"));
+		pnMatKhauOld.add(txtMKOld=new JTextField(15));
+		pnTXT.add(pnMatKhauOld);
+		pnTXT.add(Box.createVerticalStrut(40));
+		
+		lblMKOld.setVisible(false);
+		txtMKOld.setVisible(false);
 		
 		JPanel pnBtn=new JPanel();
 		pnBtn.setBackground(new Color(204, 241, 157));
@@ -229,8 +237,11 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		lblChucVu.setPreferredSize(lblSDT.getPreferredSize());
 		txtNgayVaoLam.setPreferredSize(txtSDT.getPreferredSize());
 		cbxChucVu.setPreferredSize(txtSDT.getPreferredSize());
-		lblTK.setPreferredSize(lblSDT.getPreferredSize());
 		lblMK.setPreferredSize(lblSDT.getPreferredSize());
+		
+//		
+		lblMKOld.setPreferredSize(txtSDT.getPreferredSize());
+//		
 		
 		JPanel pntblNV=new JPanel();
 		pntblNV.setBackground(new Color(204, 241, 157));
@@ -241,7 +252,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		
 		pntblNV.add(scrollPane);
 		String[] header = { "Mã NV", "Tên NV", "Ngày sinh", "Số điện thoại", "Lương", "Địa chỉ",
-				"Email","Chức vụ"};
+				"Email","Chức vụ", "Mật khẩu"};
 		modelDanhSachNV = new DefaultTableModel(header, 0);
 
 		table = new JTable(modelDanhSachNV) {
@@ -251,6 +262,18 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 				return false;
 			}
 		};
+		
+		TableColumnModel columnModel = table.getColumnModel();
+		int columnCount = columnModel.getColumnCount();
+
+		// Ẩn cột mật khẩu
+		if (columnCount >= 1) {
+		    TableColumn lastColumn = columnModel.getColumn(columnCount - 1);
+		    
+		    // Ẩn cột cuối cùng
+		    columnModel.removeColumn(lastColumn);
+		}
+		
 		nvDao=new NhanVien_DAO();
 		docDuLieuDatabaseVaoTable();
 
@@ -310,7 +333,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 			String luongString = String.valueOf(phanNguyen); 
 			modelDanhSachNV.addRow(new Object[] { nv.getMaNV(), nv.getTenNV(),ngaySinh,
 					nv.getSdt(), luongString, nv.getDiaChi(),
-					nv.getEmail(), nv.getChucVu()});
+					nv.getEmail(), nv.getChucVu(), nv.getMatKhau()});
 			
 		}
 	}
@@ -402,10 +425,10 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtDC.setText("");
 		txtMail.setText("");
 		cbxChucVu.setSelectedIndex(0);
-		txtTK.setText("");
 		txtMK.setText("");
-		txtTK.setEditable(true);
-		txtMK.setEditable(true);
+		txtMKOld.setText("");
+		lblMKOld.setVisible(false);
+		txtMKOld.setVisible(false);
 	}
 
 	public static void main(String[] args) {
@@ -421,6 +444,11 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		Object o=e.getSource();
 		if(o.equals(btnThem)) {
 			if(valid()) {
+				if (txtMK.getText().equals("")){
+					txtMK.requestFocus();
+					JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				dsNV=nvDao.getAllNV();
 				for (NhanVien nv : dsNV) {
 					if(nv.getMaNV().equals(txtMaNV.getText())) {
@@ -443,7 +471,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 					nv.setDiaChi(txtDC.getText().trim());
 					nv.setEmail(txtMail.getText().trim());
 					nv.setChucVu(cbxChucVu.getSelectedItem().toString());
-					nv.setTenDN(txtTK.getText().trim());
 					nv.setMatKhau(txtMK.getText().trim());
 					if(nvDao.themNhanVien(nv)) {
 						JOptionPane.showMessageDialog(this, "Thêm thành công");
@@ -486,6 +513,21 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 			}
 		} else if(o.equals(btnSua)) {
 			if(valid()) {
+				String matKhau = hidePass;
+				if (!txtMK.getText().trim().equals("")){
+					if (txtMKOld.getText().trim().equals("")){
+						JOptionPane.showMessageDialog(this, "Vui lòng nhập mật khẩu cũ để cập nhật mật khẩu!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+						txtMKOld.requestFocus();
+						return;
+					}
+					if (!txtMKOld.getText().trim().equals(hidePass)) {
+						JOptionPane.showMessageDialog(this, "Sai mật khẩu!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
+						txtMKOld.requestFocus();
+						return;
+					}
+					matKhau = txtMK.getText().trim();
+				}
+				
 				dsNV = nvDao.getAllNV();
 				String nameDB = "";
 				String maDB = "";
@@ -510,6 +552,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 						}
 					}
 				}
+				
+				
 				int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn sửa thông tin"
 						+ " nhân viên " + nameDB + "\n với mã nhân viên là " +maDB+ " không?", "Cảnh báo",
 						JOptionPane.YES_NO_OPTION);
@@ -519,17 +563,20 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 					String strNgayVaoLam = dateFormat.format(txtNgayVaoLam.getDate());
 					java.sql.Date ngayVaoLam = java.sql.Date.valueOf(strNgayVaoLam);
 					
-					nv.setMaNV(txtMaNV.getText());
-					nv.setTenNV(txtTenNV.getText());
+					nv.setMaNV(txtMaNV.getText().trim());
+					nv.setTenNV(txtTenNV.getText().trim());
 					nv.setNgayVaoLam(ngayVaoLam);
-					nv.setSdt(txtSDT.getText());
-					nv.setLuong(Double.parseDouble(txtLuong.getText()));
-					nv.setDiaChi(txtDC.getText());
-					nv.setEmail(txtMail.getText());
+					nv.setSdt(txtSDT.getText().trim());
+					nv.setLuong(Double.parseDouble(txtLuong.getText().trim()));
+					nv.setDiaChi(txtDC.getText().trim());
+					nv.setEmail(txtMail.getText().trim());
 					nv.setChucVu(cbxChucVu.getSelectedItem().toString());
+					nv.setMatKhau(matKhau);
 					if(nvDao.capNhat(txtMaNV.getText(),nv)) {
 						JOptionPane.showMessageDialog(this, "Sửa thành công");
 						docDuLieuDatabaseVaoTable();
+						lblMKOld.setVisible(false);
+						txtMKOld.setVisible(false);
 					}
 				}
 			}
@@ -538,8 +585,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		}else if(o.equals(btnTimKiem)) {
 			if(cbxTimKiem.getSelectedIndex()==0) {
 				docDuLieuDatabaseVaoTable();
-				txtTK.setEditable(true);
-				txtMK.setEditable(true);
+ 				txtMK.setEditable(true);
 			}else if(cbxTimKiem.getSelectedIndex()==1) {
 				if(txtTimKiem.getText().equalsIgnoreCase(""))
 					JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên", "Lỗi!", JOptionPane.ERROR_MESSAGE);
@@ -579,10 +625,11 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtDC.setText(modelDanhSachNV.getValueAt(row, 5).toString());
 		txtMail.setText(modelDanhSachNV.getValueAt(row, 6).toString());
 		cbxChucVu.setSelectedIndex((modelDanhSachNV.getValueAt(row, 7).toString()).equalsIgnoreCase("Quản lý") ? 0:1);
-		txtTK.setText("");
 		txtMK.setText("");
-		txtTK.setEditable(false);
-		txtMK.setEditable(false);
+		txtMKOld.setText("");
+		hidePass = modelDanhSachNV.getValueAt(row, 8).toString();
+		txtMKOld.setVisible(true);
+		lblMKOld.setVisible(true);
 	}
 
 	@Override

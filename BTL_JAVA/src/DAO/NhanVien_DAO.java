@@ -28,7 +28,7 @@ public class NhanVien_DAO {
 	 * @return true nếu thêm thành công và false nếu thêm thất bại
 	 */
 	public boolean themNhanVien(NhanVien nv) {
-		String sql = "insert into NhanVien values(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into NhanVien values(?,?,?,?,?,?,?,?,?)";
 		int n;
 		try {
 			PreparedStatement stmt = ketNoi.prepareStatement(sql);
@@ -40,8 +40,7 @@ public class NhanVien_DAO {
 			stmt.setString(6, nv.getDiaChi());
 			stmt.setString(7,  nv.getSdt());
 			stmt.setDate(8,(Date) nv.getNgayVaoLam());
-			stmt.setString(9, nv.getTenDN());
-			stmt.setString(10, nv.getMatKhau());
+			stmt.setString(9, nv.getMatKhau());
 			try {
 				n = stmt.executeUpdate();
 				if (n > 0)
@@ -63,7 +62,7 @@ public class NhanVien_DAO {
 		PreparedStatement stmt = null;
 		try {
 			stmt = ketNoi.prepareStatement("update NhanVien set HoTen = ?, ChucVu = ?, Luong = ?"
-					+ ",Email = ?, DiaChi = ?, Sdt = ?, NgayVaoLam = ?, TenTaiKhoan = ?, MatKhau = ? where MaNhanVien = ?");
+					+ ",Email = ?, DiaChi = ?, Sdt = ?, NgayVaoLam = ?, MatKhau = ? where MaNhanVien = ?");
 			stmt.setString(1, nv.getTenNV());
 			stmt.setString(2, nv.getChucVu());
 			stmt.setDouble(3, nv.getLuong());
@@ -71,9 +70,8 @@ public class NhanVien_DAO {
 			stmt.setString(5, nv.getDiaChi());
 			stmt.setString(6, nv.getSdt());
 			stmt.setDate(7, (Date) nv.getNgayVaoLam());
-			stmt.setString(8, nv.getTenDN());
-			stmt.setString(9, nv.getMatKhau());
-			stmt.setString(10, maNhanVien);
+			stmt.setString(8, nv.getMatKhau());
+			stmt.setString(9, maNhanVien);
 			n = stmt.executeUpdate();
 		}  catch (SQLException ex) {
 			// TODO: handle exception
@@ -179,7 +177,6 @@ public class NhanVien_DAO {
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				NhanVien nv = new NhanVien();
-//				SanPham sp = new SanPham(rs.getString("MaSanPham"));
 				nv.setMaNV(rs.getString("MaNhanVien"));
 				nv.setTenNV(rs.getString("HoTen"));
 				nv.setNgayVaoLam(rs.getDate("NgayVaoLam"));
@@ -188,6 +185,7 @@ public class NhanVien_DAO {
 				nv.setDiaChi(rs.getString("DiaChi"));
 				nv.setEmail(rs.getString("Email"));
 				nv.setChucVu(rs.getString("ChucVu"));
+				nv.setMatKhau(rs.getString("MatKhau"));
 				dSNV.add(nv);
 			}
 			stmt.close();
