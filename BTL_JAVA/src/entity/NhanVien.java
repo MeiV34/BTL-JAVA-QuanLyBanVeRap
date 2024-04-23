@@ -11,13 +11,12 @@ public class NhanVien {
 	private String diaChi;
 	private String email;
 	private String chucVu;
-	private String tenDN;
 	private String matKhau;
 	public NhanVien() {
 		super();
 	}
 	public NhanVien(String maNV, String tenNV, Date ngayVaoLam, String sdt, Double luong, String diaChi, String email,
-			String chucVu, String tenDN, String matKhau) {
+			String chucVu, String matKhau) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -27,7 +26,6 @@ public class NhanVien {
 		this.diaChi = diaChi;
 		this.email = email;
 		this.chucVu = chucVu;
-		this.tenDN = tenDN;
 		this.matKhau = matKhau;
 	}
 	public String getMaNV() {
@@ -78,12 +76,6 @@ public class NhanVien {
 	public void setChucVu(String chucVu) {
 		this.chucVu = chucVu;
 	}
-	public String getTenDN() {
-		return tenDN;
-	}
-	public void setTenDN(String tenDN) {
-		this.tenDN = tenDN;
-	}
 	public String getMatKhau() {
 		return matKhau;
 	}
@@ -93,7 +85,7 @@ public class NhanVien {
 	@Override
 	public String toString() {
 		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", ngayVaoLam=" + ngayVaoLam + ", sdt=" + sdt + ", luong="
-				+ luong + ", diaChi=" + diaChi + ", email=" + email + ", chucVu=" + chucVu + ", tenDN=" + tenDN
+				+ luong + ", diaChi=" + diaChi + ", email=" + email + ", chucVu=" + chucVu
 				+ ", matKhau=" + matKhau + "]";
 	}
 	
