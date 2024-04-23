@@ -105,7 +105,14 @@ public class SuatChieu_DAO {
 	public List<SuatChieu> getAllSC() {
 		List<SuatChieu> dsSC = new ArrayList<SuatChieu>();
 		PreparedStatement stmt = null;
-		String sql = "select * from SuatChieu";
+		String sql = "SELECT sc.MaSuatChieu AS MaSuatChieu,lc.MaLichChieu AS MaLichChieu,p.MaPhong AS MaPhong,\r\n"
+				+ "f.MaPhim AS MaPhim,lc.NgayChieu \r\n"
+				+ "AS NgayChieu, p.soPhong AS tenPhong, f.TenPhim \r\n"
+				+ "AS tenPhim , sc.SuatChieu as GioChieu\r\n"
+				+ "FROM SuatChieu sc\r\n"
+				+ "JOIN LichChieu lc ON sc.MaLichChieu = lc.MaLichChieu \r\n"
+				+ "JOIN Phong p ON sc.MaPhong = p.MaPhong\r\n"
+				+ "JOIN Phim f ON sc.MaPhim = f.MaPhim";
 		try {
 			stmt = ketNoi.prepareStatement(sql);
 			ResultSet rs = stmt.executeQuery();
@@ -113,12 +120,15 @@ public class SuatChieu_DAO {
 				SuatChieu sc = new SuatChieu();
 				sc.setMaSC(rs.getString("MaSuatChieu"));
 				LichChieu lc=new LichChieu(rs.getString("MaLichChieu"));
+				lc.setNgayChieu(rs.getDate("NgayChieu"));
 				Phong p=new Phong(rs.getString("MaPhong"));
+				p.setTenPhong(rs.getString("tenPhong"));
 				Phim phim=new Phim(rs.getString("MaPhim"));
+				phim.setTenPhim(rs.getString("tenPhim"));
 				sc.setLichChieu(lc);
 				sc.setPhong(p);
 				sc.setPhim(phim);
-				sc.setSuatChieu(rs.getTime("SuatChieu"));
+				sc.setSuatChieu(rs.getTime("GioChieu"));
 				dsSC.add(sc);
 			}
 			stmt.close();
