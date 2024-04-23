@@ -111,7 +111,7 @@ public class KhachHang_DAO {
 	}
 	
 	//xoa
-	public boolean removeKhachHang(String maKhachHang) {
+	public boolean removeKhachHang(int maKhachHang) {
 		ConnectDB.getInstance();
 		con = ConnectDB.getConnection();
 		PreparedStatement state = null;
@@ -119,7 +119,7 @@ public class KhachHang_DAO {
 		try {
 			String sql = "DELETE FROM KhachHang Where MaKhachHang = ?";
 			state = con.prepareStatement(sql);
-			state.setString(1, maKhachHang);
+			state.setInt(1, maKhachHang);
 			n = state.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

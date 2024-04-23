@@ -10,8 +10,6 @@ import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
 
@@ -26,7 +24,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -34,49 +31,35 @@ import DAO.KhachHang_DAO;
 import common.Utils;
 import connectDB.ConnectDB;
 import entity.KhachHang;
-import entity.Phim;
 
 public class FrmKhachHang extends JFrame implements ActionListener, MouseListener{
 	private Connection con;
 	private Box boxLayout;
-	private Box boxLayout1;
-	private Box boxLayout2;
-	private Box boxLayout3;
-	private Box boxLayoutBtn;
-	private Box boxLayoutTable;
-	private JTextField textMa;
 	private JTextField txtHoTen;
-	private JTextField textGV;
-	private Box boxLayout4;
 	private JTextField txtMa;
 	private JTextField txtEmail;
 	private JTextField txtSdt;
-	private JLabel spacer1;
 	private JButton btnThem;
-	private JLabel spacer2;
 	private AbstractButton btnXoa;
-	private JLabel spacer3;
-	private JLabel spacer4;
-	private JLabel spacer5;
-	private JLabel spacer6;
-	private JLabel spacer10;
-	private JLabel spacer11;
-	private JLabel spacer7;
 	private JButton btnSua;
-	private JLabel spacer8;
 	private JButton btnLamMoi;
-	private JLabel spacer9;
 	private DefaultTableModel modelKH;
 	private JTable table;
 	private JTextField txtTimKiem;
 	private JButton btnTimKiem;
 	private KhachHang_DAO khachHangDAO = new KhachHang_DAO();
-	private JTable tableKHUpdate;
-	private JTable tableKHFind;
 
 	public FrmKhachHang() throws ParseException  {
 		add(taoFrmKhachHang());
 //		
+	}
+	
+	public static void main(String[] args) {
+		try {
+			new FrmKhachHang().setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public JPanel taoFrmKhachHang(){
@@ -125,35 +108,38 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		JPanel pnBtn=new JPanel();
 		pnBtn.setBackground(new Color(204, 241, 157));
 		pnBtn.setLayout(new GridLayout(3,5));
-		pnBtn.add(spacer1=new JLabel());
+		
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnThem=new JButton(""));
 		btnThem.setIcon(new ImageIcon("img/add-user.png"));
 		btnThem.setToolTipText("Thêm mới");
 		btnThem.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer2=new JLabel());
+		
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnXoa=new JButton(""));
 		btnXoa.setIcon(new ImageIcon("img/delete-user.png"));
 		btnXoa.setToolTipText("Xóa");
 		btnXoa.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer3=new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());                                                                                                                                                                                                                         
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
 		
-		pnBtn.add(spacer4=new JLabel());
-		pnBtn.add(spacer5=new JLabel());                                                                                                                                                                                                                         
-		pnBtn.add(spacer6=new JLabel());
-		pnBtn.add(spacer10=new JLabel());
-		pnBtn.add(spacer11=new JLabel());
-		
-		pnBtn.add(spacer7=new JLabel());
 		pnBtn.add(btnSua=new JButton(""));
 		btnSua.setIcon(new ImageIcon("img/update-user.png"));
 		btnSua.setToolTipText("Cập nhật");
 		btnSua.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer8=new JLabel());
+		pnBtn.add(new JLabel());
+		
 		pnBtn.add(btnLamMoi=new JButton(""));
 		btnLamMoi.setIcon(new ImageIcon("img/refresh.png"));
 		btnLamMoi.setToolTipText("Làm mới");
 		btnLamMoi.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer9=new JLabel());		
+		pnBtn.add(new JLabel());	
+		
 		pnTXT.add(pnBtn);
 		pnTXT.add(Box.createVerticalStrut(60));
 		
@@ -257,7 +243,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		} else if(o == btnXoa) {
 			int row = table.getSelectedRow();
 			if(row >= 0) {
-				String kh =(String) modelKH.getValueAt(row, 0);
+				int kh =(Integer) modelKH.getValueAt(row, 0);
 				int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa Khách hàng này?");
 				if(choice == JOptionPane.YES_OPTION) {
 					if(khachHangDAO.removeKhachHang(kh)) {
@@ -311,9 +297,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 				};
 			}
 		} else if(o == btnTimKiem) {
-			System.out.print("hi");
 			String tuKhoa = txtTimKiem.getText().trim();
-			System.out.print(tuKhoa);
 			if(!tuKhoa.isEmpty()) {
 				timKhachHang(tuKhoa);
 			}else {
@@ -416,37 +400,4 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		// TODO Auto-generated method stub
 		
 	}
-
-	public static void main(String[] args) {
-		try {
-			new FrmKhachHang().setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-//	private void timTheoMaNV() {
-//		String timNV=txtTimKiem.getText();
-//		if(timNV != null && timNV.trim().length()>0) {
-//			try {
-//				NhanVien nv=ds.timKiemNV(timNV);
-//				if(nv !=null) {
-//					xoaDuLieuTrenModel();
-//					model.addRow(new Object[] {
-//							nv.getMaNV(),nv.getHo(),nv.getTen(),nv.getPhai()==1?"Nam":"Nữ", nv.getTuoi(), nv.getTienLuong()
-//					});
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Không tìm thấy mã nhân viên này.");
-//				}
-//			} catch (Exception e) {
-//				JOptionPane.showMessageDialog(null, "Dữ liệu không hợp lê.");
-//				txtTimKiem.selectAll();
-//				txtTimKiem.requestFocus();
-//			}
-//		}else {
-//			xoaDuLieuTrenModel();
-//			docDuLieuTuArrayLenModel();
-//			table.setModel(model);
-//		}
-//	}
 }
