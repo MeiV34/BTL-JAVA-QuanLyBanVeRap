@@ -96,6 +96,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	public FrmNhanVien() throws ParseException  {
 		getContentPane().add(taoFrmNhanVien());
 		setSize(1035,682);
+		
 	}
 	
 	public JPanel taoFrmNhanVien() {
@@ -136,7 +137,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pnNgaySinh.add(lblNgayVaoLam=new JLabel("Ngày vào làm"));
 		pnNgaySinh.add(txtNgayVaoLam=new JDateChooser());
 		txtNgayVaoLam.setDateFormatString("dd-MM-yyyy");
-//		JFormattedTextField txtNgaySinh=new JFormattedTextField(new MaskFormatter("dd/MM/yyyy"));
 		
 		pnTXT.add(pnNgaySinh);
 		
@@ -182,7 +182,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		flowLayout_7.setHgap(70);
 		pnChucVu.setBackground(new Color(204, 241, 157));
 		pnChucVu.add(lblChucVu=new JLabel("Chức vụ"));
-//		pnChucVu.add(txtChucVu=new JTextField(15));
 		cbxChucVu=new JComboBox();
 		cbxChucVu.setModel(new DefaultComboBoxModel(new String[] {"Quản lý","Nhân viên"}));
 		cbxChucVu.setBackground(new Color(255,255,255));
@@ -195,12 +194,12 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pnBtn.setLayout(new GridLayout(3,5));
 		pnBtn.add(spacer1=new JLabel());
 		pnBtn.add(btnThem=new JButton());
-		btnThem.setIcon(new ImageIcon("img\\add-user.png"));
+		btnThem.setIcon(new ImageIcon("img/add-user.png"));
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer2=new JLabel());
 		pnBtn.add(btnXoa=new JButton());
-		btnXoa.setIcon(new ImageIcon("img\\delete-user.png"));
+		btnXoa.setIcon(new ImageIcon("img/delete-user.png"));
 		btnXoa.setToolTipText("Xóa nhân viên");
 		btnXoa.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer3=new JLabel());
@@ -213,12 +212,12 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		
 		pnBtn.add(spacer7=new JLabel());
 		pnBtn.add(btnSua=new JButton());
-		btnSua.setIcon(new ImageIcon("img\\update-user.png"));
+		btnSua.setIcon(new ImageIcon("img/update-user.png"));
 		btnSua.setToolTipText("Sửa thông tin");
 		btnSua.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer8=new JLabel());
 		pnBtn.add(btnLamMoi=new JButton());
-		btnLamMoi.setIcon(new ImageIcon("img\\refresh.png"));
+		btnLamMoi.setIcon(new ImageIcon("img/refresh.png"));
 		btnLamMoi.setToolTipText("Làm mới");
 		btnLamMoi.setBackground(new Color(255, 255, 255));
 		pnBtn.add(spacer9=new JLabel());		
@@ -229,7 +228,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		
 		lblMaNV.setPreferredSize(lblSDT.getPreferredSize());
 		lblTenNV.setPreferredSize(lblSDT.getPreferredSize());
-//		lblNgayVaoLam.setPreferredSize(lblSDT.getPreferredSize());
 		lblLuong.setPreferredSize(lblSDT.getPreferredSize());
 		lblDC.setPreferredSize(lblSDT.getPreferredSize());
 		lblMail.setPreferredSize(lblSDT.getPreferredSize());
@@ -281,12 +279,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pntblNV.add(txtTimKiem);
 
 		btnTimKiem = new JButton();
-		btnTimKiem.setIcon(new ImageIcon("img\\search.png"));
+		btnTimKiem.setIcon(new ImageIcon("img/search.png"));
 		btnTimKiem.setBackground(new Color(255, 255, 255));
-		btnTimKiem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnTimKiem.setForeground(new Color(0, 0, 0));
 		btnTimKiem.setBounds(459, 20, 76, 34);
 		pntblNV.add(btnTimKiem);
@@ -302,7 +296,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pn_NV.add(pntblNV);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		pn_NV.setSize(1084,768);
+		pn_NV.setSize(1035,682);
 		return pn_NV;
 	}
 	public void docDuLieuDatabaseVaoTable() {
@@ -310,7 +304,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		dsNV = nvDao.getAllNV();
 		for (NhanVien nv : dsNV) {
 			// Format ngay
-			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String ngaySinh = dateFormat.format(nv.getNgayVaoLam());
 
@@ -336,21 +329,12 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		}
 		if(i==2) {
 			dsNV =nvDao.timTheoMa_VerK(str);
-//			int row=modelDanhSachNV.getRowCount();
-//			for (int j = row-1; j>= 0; j--) {
-//				modelDanhSachNV.removeRow(j);
-//			}
 		}
 		if(i==3) {
 			dsNV =nvDao.timTheoChucVu_VerK(str);
-//			int row=modelDanhSachNV.getRowCount();
-//			for (int j = row-1; j>= 0; j--) {
-//				modelDanhSachNV.removeRow(j);
-//			}
 		}
 		for (NhanVien nv : dsNV) {
 			// Format ngay
-			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String ngaySinh = dateFormat.format(nv.getNgayVaoLam());
 
@@ -415,7 +399,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 						JOptionPane.showMessageDialog(this,"Trùng mã nhân viên!");
 						txtMaNV.requestFocus();
 						txtMaNV.selectAll();
-						return;
+						break;
 					}
 				}
 				int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn thêm nhân viên này không?", "Cảnh báo",
@@ -463,7 +447,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 					}
 				}
 			}
-			int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn sửa thông tin"
+			int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa"
 					+ " nhân viên với mã nhân viên là " +maDB+ " không?", "Cảnh báo",
 					JOptionPane.YES_NO_OPTION);
 			if(n==0) {
@@ -560,7 +544,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtTenNV.setText(modelDanhSachNV.getValueAt(row, 1).toString());
 		Date date;
 		try {
-			date = new SimpleDateFormat("dd-MM-yyyy").parse(modelDanhSachNV.getValueAt(row, 2).toString());
+			date = new SimpleDateFormat("yyyy-mm-dd").parse(modelDanhSachNV.getValueAt(row, 2).toString());
 			txtNgayVaoLam.setDate(date);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block

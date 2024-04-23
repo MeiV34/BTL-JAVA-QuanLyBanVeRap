@@ -51,6 +51,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 
 	public FrmKhachHang() throws ParseException  {
 		add(taoFrmKhachHang());
+//		
 	}
 	
 	public static void main(String[] args) {
@@ -201,7 +202,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		txtMa.setText(String.valueOf(khachHangDAO.getMaKHAutoTang()));
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		pnKhachHang.setSize(1084,768);
+		pnKhachHang.setSize(1035,682);
 		return pnKhachHang;		
 	}
 	
