@@ -507,7 +507,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 						JOptionPane.YES_NO_OPTION);
 				if (n == 0) {
 					NhanVien nv = new NhanVien();
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 					String strNgayVaoLam = dateFormat.format(txtNgayVaoLam.getDate());
 					java.sql.Date ngayVaoLam = java.sql.Date.valueOf(strNgayVaoLam);
 					

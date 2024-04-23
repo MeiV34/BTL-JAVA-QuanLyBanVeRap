@@ -54,12 +54,10 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 	private JButton btnXoa;
 	private JButton btnSua;
 	private JButton btnLamMoi;
-	private JLayeredPane layeredPane = new JLayeredPane();
 	private DefaultTableModel modelDanhSachLC;
 	private JTable table;
 	private JTextField txtTimKiem;
 	private JButton btnTimKiem;
-	private FrmNhanVien frmNV;
 	private List<LichChieu> dsLC;
 	private LichChieu_DAO lcDao;
 	private JButton btnXem;
@@ -193,7 +191,6 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		btnXem.setForeground(new Color(0, 0, 0));
 		btnXem.setBounds(486, 20, 76, 34);
 		pntblNV.add(btnXem);
-		layeredPane.setSize(1035, 681);
 		
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
@@ -205,12 +202,10 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		
 		pn_LichChieu.add(pnTXT);
 		pn_LichChieu.add(pntblNV);
-		pn_LichChieu.add(layeredPane);
 		
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pn_LichChieu.setSize(1084,768);
-		layeredPane.add(pntblNV);
 		return pn_LichChieu;
 	}
 	public void docDuLieuDatabaseVaoTable() {
@@ -242,12 +237,6 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 			return false;
 		}
 		return true;
-	}
-	public void switchPanels(JPanel panel) {
-		layeredPane.removeAll();
-		layeredPane.add(panel);
-		layeredPane.repaint();
-		layeredPane.revalidate();
 	}
 
 	public static void main(String[] args) {
@@ -373,17 +362,14 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 			if(txtTimKiem.getText().equalsIgnoreCase("")) 
 				JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
 		}else if(o.equals(btnXem)) {
+			FrmSuatChieu frmSC;
 			try {
-				frmNV=new FrmNhanVien();
-				JPanel pnlNV=frmNV.taoFrmNhanVien();
-				pnlNV.setVisible(true);
-				switchPanels(pnlNV);
-//				JOptionPane.showMessageDialog(pnlNV, "hhh");
+				frmSC = new FrmSuatChieu();
+				frmSC.setVisible(true);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
 		}
 	}
 

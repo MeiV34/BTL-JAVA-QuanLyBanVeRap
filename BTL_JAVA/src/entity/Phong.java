@@ -13,6 +13,10 @@ public class Phong {
 		this.tenPhong = tenPhong;
 		this.soLuongGhe = soLuongGhe;
 	}
+	public Phong(String maPhong) {
+		super();
+		this.maPhong = maPhong;
+	}
 	public String getMaPhong() {
 		return maPhong;
 	}

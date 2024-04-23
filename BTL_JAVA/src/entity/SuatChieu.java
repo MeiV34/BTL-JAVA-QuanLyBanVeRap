@@ -22,6 +22,9 @@ public class SuatChieu {
 		super();
 		this.phong = phong;
 	}
+	public SuatChieu() {
+		
+	}
 
 	public SuatChieu(Phim phim) {
 		super();
