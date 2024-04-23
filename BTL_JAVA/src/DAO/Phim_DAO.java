@@ -188,6 +188,42 @@ public class Phim_DAO {
 		}
 		return listPhim;
 	}
+	public int getLength() {
+		int length=0;
+		try {
+			
+			ConnectDB.getInstance().connect();
+			con = ConnectDB.getConnection();
+			String sql = "SELECT soPhong FROM Phong";
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(sql);
+			while(rs.next()) {
+				length++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return length;
+	}
+	public String[] getALLTenPhim() {
+		String [] dsPhim= new String[getLength()];
+		int i=0;
+		try {
+			ConnectDB.getInstance().connect();
+			con = ConnectDB.getConnection();
+			String sql = "SELECT TenPhim FROM Phim";
+			Statement state = con.createStatement();
+			ResultSet rs = state.executeQuery(sql);
+			while(rs.next()) {
+				String ten = rs.getString(1);
+				dsPhim[i]=ten;
+				i++;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dsPhim;
+	}
 	
 }
 
