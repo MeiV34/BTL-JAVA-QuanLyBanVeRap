@@ -234,14 +234,17 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 			int row = table.getSelectedRow();
 			if(row >= 0) {
 				String data = (String) model.getValueAt(row, 0);
-				int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa Khách hàng này?");
+				int choice = JOptionPane.showConfirmDialog(this, "Bạn có thực sự muốn xóa Phòng này?");
 				if(choice == JOptionPane.YES_OPTION) {
 					if(phongDAO.removePhong(data)) {
 						model.removeRow(row);
 						resetForm();
 //						btnThem.setEnabled(true);
 					}else {
-						JOptionPane.showMessageDialog(null, "Xóa không thành công!");
+						JOptionPane.showMessageDialog(this,
+				                "Xoá không thành công",
+				                "Lỗi!",
+				                JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}else {
@@ -308,9 +311,9 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
             return false;
 		}
 		
-		if (!ten.matches("^Phòng\\s*\\w+$")) {
+		if (!ten.matches("\\s*\\w+$")) {
 			txtTen.requestFocus();
-			JOptionPane.showMessageDialog(this, "Tên phòng phải bắt đầu bằng \"Phòng\"");
+			JOptionPane.showMessageDialog(this, "Tên phòng chỉ được chứa các ký tự chữ cái, số và dấu gạch dưới, và không được bắt đầu hoặc kết thúc bằng khoảng trắng.");
             return false;
 		}
 		
