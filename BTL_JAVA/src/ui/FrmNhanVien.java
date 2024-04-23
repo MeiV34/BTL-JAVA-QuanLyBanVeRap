@@ -76,17 +76,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private JButton btnXoa;
 	private JButton btnSua;
 	private JButton btnLamMoi;
-	private JLabel spacer1;
-	private JLabel spacer2;
-	private JLabel spacer3;
-	private JLabel spacer4;
-	private JLabel spacer5;
-	private JLabel spacer6;
-	private JLabel spacer7;
-	private JLabel spacer8;
-	private JLabel spacer9;
-	private JLabel spacer10;
-	private JLabel spacer11;
 	private DefaultTableModel modelDanhSachNV;
 	private JTable table;
 	private JTextField txtTimKiem;
@@ -214,35 +203,35 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		JPanel pnBtn=new JPanel();
 		pnBtn.setBackground(new Color(204, 241, 157));
 		pnBtn.setLayout(new GridLayout(3,5));
-		pnBtn.add(spacer1=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnThem=new JButton());
 		btnThem.setIcon(new ImageIcon("img/add-user.png"));
 		btnThem.setToolTipText("Thêm nhân viên");
 		btnThem.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer2=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnXoa=new JButton());
 		btnXoa.setIcon(new ImageIcon("img/delete-user.png"));
 		btnXoa.setToolTipText("Xóa nhân viên");
 		btnXoa.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer3=new JLabel());
+		pnBtn.add(new JLabel());
 		
-		pnBtn.add(spacer4=new JLabel());
-		pnBtn.add(spacer5=new JLabel());
-		pnBtn.add(spacer6=new JLabel());
-		pnBtn.add(spacer10=new JLabel());
-		pnBtn.add(spacer11=new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
 		
-		pnBtn.add(spacer7=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnSua=new JButton());
 		btnSua.setIcon(new ImageIcon("img/update-user.png"));
 		btnSua.setToolTipText("Sửa thông tin");
 		btnSua.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer8=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnLamMoi=new JButton());
 		btnLamMoi.setIcon(new ImageIcon("img/refresh.png"));
 		btnLamMoi.setToolTipText("Làm mới");
 		btnLamMoi.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer9=new JLabel());		
+		pnBtn.add(new JLabel());		
 		pnTXT.add(pnBtn);
 		pnTXT.add(Box.createVerticalStrut(60));
 		
@@ -376,7 +365,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private boolean valid() {
 		if(txtMaNV.getText().equals("") || txtTenNV.getText().equals("") || txtNgayVaoLam.getDate().equals("") || 
 				txtSDT.getText().equals("") || txtLuong.getText().equals("") ||txtDC.getText().equals("") || 
-				txtMail.getText().equals("")) {
+				txtMail.getText().equals("")||txtTK.getText().equals("") ||txtMK.getText().equals("")) {
 						JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
 						return false;
 					}
@@ -442,6 +431,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 					nv.setDiaChi(txtDC.getText());
 					nv.setEmail(txtMail.getText());
 					nv.setChucVu(cbxChucVu.getSelectedItem().toString());
+					nv.setTenDN(txtTK.getText());
+					nv.setMatKhau(txtMK.getText());
 					if(nvDao.themNhanVien(nv)) {
 						JOptionPane.showMessageDialog(this, "Thêm thành công");
 						docDuLieuDatabaseVaoTable();
@@ -538,9 +529,13 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 			txtDC.setText("");
 			txtMail.setText("");
 			cbxChucVu.setSelectedIndex(0);
+			txtTK.setEditable(true);
+			txtMK.setEditable(true);
 		}else if(o.equals(btnTimKiem)) {
 			if(cbxTimKiem.getSelectedIndex()==0) {
 				docDuLieuDatabaseVaoTable();
+				txtTK.setEditable(true);
+				txtMK.setEditable(true);
 			}else if(cbxTimKiem.getSelectedIndex()==1) {
 				if(txtTimKiem.getText().equalsIgnoreCase(""))
 					JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
@@ -580,7 +575,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtDC.setText(modelDanhSachNV.getValueAt(row, 5).toString());
 		txtMail.setText(modelDanhSachNV.getValueAt(row, 6).toString());
 		cbxChucVu.setSelectedIndex((modelDanhSachNV.getValueAt(row, 7).toString()).equalsIgnoreCase("Quản lý") ? 0:1);
-		 	
+		txtTK.setEditable(false);
+		txtMK.setEditable(false);
 	}
 
 	@Override

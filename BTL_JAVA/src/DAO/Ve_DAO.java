@@ -23,7 +23,7 @@ public class Ve_DAO {
 		try {
 			ConnectDB.getInstance().connect();
 			con = ConnectDB.getConnection();
-			String sql = "select SuatChieu.MaSuatChieu ,Phim.TenPhim, LichChieu.NgayChieu, Phong.soPhong,SuatChieu.SuatChieu "
+			String sql = "select SuatChieu.MaSuatChieu ,Phim.TenPhim, LichChieu.NgayChieu, Phong.TenPhong,SuatChieu.SuatChieu "
 					+ "from SuatChieu JOIN LichChieu "
 					+ "on SuatChieu.MaLichChieu = LichChieu.MaLichChieu JOIN Phim "
 					+ "on Phim.MaPhim = SuatChieu.MaPhim JOIN Phong "
