@@ -8,6 +8,11 @@ public class LichChieu {
 	public LichChieu() {
 		super();
 	}
+	
+	public LichChieu(String ma) {
+		super();
+		this.maLichChieu=ma;
+	}
 	public LichChieu(String maLichChieu, Date ngayChieu) {
 		super();
 		this.maLichChieu = maLichChieu;

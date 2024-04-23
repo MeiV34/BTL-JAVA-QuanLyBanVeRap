@@ -50,8 +50,8 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 	private KhachHang_DAO khachHangDAO = new KhachHang_DAO();
 
 	public FrmKhachHang() throws ParseException  {
-		add(taoFrmKhachHang());
-//		
+		getContentPane().add(taoFrmKhachHang());
+		setSize(1035,682);
 	}
 	
 	public static void main(String[] args) {
@@ -79,7 +79,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		
 		//JPanel Form - left
 		JPanel pnTXT=new JPanel();
-		pnTXT.setBounds(20,60,416,629);
+		pnTXT.setBounds(20,30,414,588);
 		pnTXT.setBackground(new Color(204,241,157));
 		
 		//left-input
@@ -148,8 +148,8 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		pnTable.setBackground(new Color(204, 241, 157));
 		pnTable.setLayout(null);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(20, 70, 529, 559);
-		pnTable.setBounds(466, 60, 576, 629);
+		scrollPane.setBounds(20, 70, 515, 518);
+		pnTable.setBounds(466, 30, 545, 588);
 		
 		pnTable.add(scrollPane);
 		String[] header = { "Mã KH", "Họ tên", "Email", "Số điện thoại"};
@@ -172,7 +172,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		table.setRowHeight(25);
 		txtTimKiem = new JTextField();
 		txtTimKiem.setFont(new Font("Verdana", Font.PLAIN, 14));
-		txtTimKiem.setBounds(113, 20, 340, 34);
+		txtTimKiem.setBounds(120, 20, 320, 34);
 		pnTable.add(txtTimKiem);
 
 		btnTimKiem = new JButton();
@@ -184,7 +184,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		});
 		btnTimKiem.setForeground(new Color(0, 0, 0));
 		btnTimKiem.setFont(new Font("Verdana", Font.PLAIN, 16));
-		btnTimKiem.setBounds(487, 19, 86, 34);
+		btnTimKiem.setBounds(459, 20, 76, 34);
 		pnTable.add(btnTimKiem);
 		
 		pnKhachHang.add(pnTXT);
@@ -202,7 +202,7 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 		txtMa.setText(String.valueOf(khachHangDAO.getMaKHAutoTang()));
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		pnKhachHang.setSize(1035,682);
+		pnKhachHang.setSize(1084,768);
 		return pnKhachHang;		
 	}
 	
@@ -315,19 +315,19 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 
 		if (!hoTen.matches("^[\\p{Lu}][\\p{L}]*(?:[\\s'.][\\p{Lu}][\\p{L}]*)*$")) {
 			txtHoTen.requestFocus();
-            JOptionPane.showMessageDialog(this, "Họ tên gồm nhiều từ ngăn cách bởi khoảng trắng, ký tự đầu mỗi từ phải viết hoa, có thể có '.\nKhông chứa các ký tự đặc biệt khác");
+            JOptionPane.showMessageDialog(this, "Họ tên gồm nhiều từ ngăn cách bởi khoảng trắng, ký tự đầu mỗi từ phải viết hoa, có thể có '.\nKhông chứa các ký tự đặc biệt khác", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		
 		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
 			txtEmail.requestFocus();
-			JOptionPane.showMessageDialog(this, "Email không đúng cú pháp!");
+			JOptionPane.showMessageDialog(this, "Email không đúng cú pháp!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		
 		if (!sdt.matches("^0([3|4|5|7|8|9])\\d{8}")) {
 			txtSdt.requestFocus();
-            JOptionPane.showMessageDialog(this, "Số điện thoại không đúng!");
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng số điện thoại!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		return true;

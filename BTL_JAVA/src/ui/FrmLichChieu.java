@@ -29,6 +29,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,9 +41,8 @@ import javax.swing.table.JTableHeader;
 import com.toedter.calendar.JDateChooser;
 
 import DAO.LichChieu_DAO;
-import DAO.NhanVien_DAO;
 import entity.LichChieu;
-import entity.NhanVien;
+
 import java.awt.Component;
 
 public class FrmLichChieu extends JFrame implements ActionListener,MouseListener  {
@@ -54,17 +54,6 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 	private JButton btnXoa;
 	private JButton btnSua;
 	private JButton btnLamMoi;
-	private JLabel spacer1;
-	private JLabel spacer2;
-	private JLabel spacer3;
-	private JLabel spacer4;
-	private JLabel spacer5;
-	private JLabel spacer6;
-	private JLabel spacer7;
-	private JLabel spacer8;
-	private JLabel spacer9;
-	private JLabel spacer10;
-	private JLabel spacer11;
 	private DefaultTableModel modelDanhSachLC;
 	private JTable table;
 	private JTextField txtTimKiem;
@@ -118,35 +107,35 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		JPanel pnBtn=new JPanel();
 		pnBtn.setBackground(new Color(204, 241, 157));
 		pnBtn.setLayout(new GridLayout(3,5));
-		pnBtn.add(spacer1=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnThem=new JButton());
 		btnThem.setIcon(new ImageIcon("img/plus.png"));
 		btnThem.setToolTipText("Thêm lịch chiếu");
 		btnThem.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer2=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnXoa=new JButton());
 		btnXoa.setIcon(new ImageIcon("img/remove.png"));
 		btnXoa.setToolTipText("Xóa lịch chiếu");
 		btnXoa.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer3=new JLabel());
+		pnBtn.add(new JLabel());
 		
-		pnBtn.add(spacer4=new JLabel());
-		pnBtn.add(spacer5=new JLabel());
-		pnBtn.add(spacer6=new JLabel());
-		pnBtn.add(spacer10=new JLabel());
-		pnBtn.add(spacer11=new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
+		pnBtn.add(new JLabel());
 		
-		pnBtn.add(spacer7=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnSua=new JButton());
 		btnSua.setIcon(new ImageIcon("img/update.png"));
 		btnSua.setToolTipText("Sửa lịch chiếu");
 		btnSua.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer8=new JLabel());
+		pnBtn.add(new JLabel());
 		pnBtn.add(btnLamMoi=new JButton());
 		btnLamMoi.setIcon(new ImageIcon("img/refresh.png"));
 		btnLamMoi.setToolTipText("Làm mới");
 		btnLamMoi.setBackground(new Color(255, 255, 255));
-		pnBtn.add(spacer9=new JLabel());		
+		pnBtn.add(new JLabel());		
 		pnTXT.add(pnBtn,BorderLayout.CENTER);
 
 		lblNgayChieu.setPreferredSize(lblMaLichChieu.getPreferredSize());
@@ -208,10 +197,12 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		btnSua.addActionListener(this);
 		btnLamMoi.addActionListener(this);
 		btnTimKiem.addActionListener(this);
+		btnXem.addActionListener(this);
 		table.addMouseListener(this);
 		
 		pn_LichChieu.add(pnTXT);
 		pn_LichChieu.add(pntblNV);
+		
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pn_LichChieu.setSize(1084,768);
@@ -370,6 +361,15 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		}else if(o.equals(btnTimKiem)) {
 			if(txtTimKiem.getText().equalsIgnoreCase("")) 
 				JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
+		}else if(o.equals(btnXem)) {
+			FrmSuatChieu frmSC;
+			try {
+				frmSC = new FrmSuatChieu();
+				frmSC.setVisible(true);
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 

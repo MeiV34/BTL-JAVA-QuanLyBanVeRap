@@ -27,7 +27,7 @@ public class Ve_DAO {
 		try {
 			ConnectDB.getInstance().connect();
 			con = ConnectDB.getConnection();
-			String sql = "select SuatChieu.MaSuatChieu ,Phim.TenPhim, LichChieu.NgayChieu, Phong.soPhong,SuatChieu.SuatChieu "
+			String sql = "select SuatChieu.MaSuatChieu ,Phim.TenPhim, LichChieu.NgayChieu, Phong.TenPhong,SuatChieu.SuatChieu "
 					+ "from SuatChieu JOIN LichChieu "
 					+ "on SuatChieu.MaLichChieu = LichChieu.MaLichChieu JOIN Phim "
 					+ "on Phim.MaPhim = SuatChieu.MaPhim JOIN Phong "
@@ -62,7 +62,6 @@ public class Ve_DAO {
 	                 "JOIN Phong ON Phong.MaPhong = SuatChieu.MaPhong " +
 	                 "WHERE NgayChieu = ? ";
 	    try {
-//	    	java.sql.Date nc = new java.sql.Date(date.getTime());
 	        stmt = con.prepareStatement(sql);
 	        stmt.setDate(1,(java.sql.Date) date); // Chuyển đổi từ java.util.Date sang java.sql.Date
 	        ResultSet rs = stmt.executeQuery();
