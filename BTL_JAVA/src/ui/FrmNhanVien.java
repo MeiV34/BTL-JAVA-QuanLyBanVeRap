@@ -93,6 +93,10 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private JButton btnTimKiem;
 	private List<NhanVien> dsNV;
 	private NhanVien_DAO nvDao;
+	private JTextField txtTK;
+	private JLabel lblTK;
+	private JLabel lblMK;
+	private JTextField txtMK;
 	public FrmNhanVien() throws ParseException  {
 		getContentPane().add(taoFrmNhanVien());
 		setSize(1035,682);
@@ -187,6 +191,24 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		cbxChucVu.setBackground(new Color(255,255,255));
 		pnChucVu.add(cbxChucVu);
 		pnTXT.add(pnChucVu);
+		
+		JPanel pnTaiKhoan=new JPanel();
+		FlowLayout flowLayout_8 = (FlowLayout) pnTaiKhoan.getLayout();
+		flowLayout_8.setVgap(0);
+		flowLayout_8.setHgap(70);
+		pnTaiKhoan.setBackground(new Color(204, 241, 157));
+		pnTaiKhoan.add(lblTK=new JLabel("Tài khoản"));
+		pnTaiKhoan.add(txtTK=new JTextField(15));
+		pnTXT.add(pnTaiKhoan);
+		
+		JPanel pnMatKhau=new JPanel();
+		FlowLayout flowLayout_9 = (FlowLayout) pnMatKhau.getLayout();
+		flowLayout_9.setVgap(0);
+		flowLayout_9.setHgap(70);
+		pnMatKhau.setBackground(new Color(204, 241, 157));
+		pnMatKhau.add(lblMK=new JLabel("Mật khẩu"));
+		pnMatKhau.add(txtMK=new JTextField(15));
+		pnTXT.add(pnMatKhau);
 		pnTXT.add(Box.createVerticalStrut(40));
 		
 		JPanel pnBtn=new JPanel();
@@ -234,6 +256,8 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		lblChucVu.setPreferredSize(lblSDT.getPreferredSize());
 		txtNgayVaoLam.setPreferredSize(txtSDT.getPreferredSize());
 		cbxChucVu.setPreferredSize(txtSDT.getPreferredSize());
+		lblTK.setPreferredSize(lblSDT.getPreferredSize());
+		lblMK.setPreferredSize(lblSDT.getPreferredSize());
 		
 		JPanel pntblNV=new JPanel();
 		pntblNV.setBackground(new Color(204, 241, 157));
@@ -435,7 +459,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 				}
 			}
 			if(index == 0) {
-				JOptionPane.showMessageDialog(this, "Không tìm thấy mã nhân viên cần sửa!!");
+				JOptionPane.showMessageDialog(this, "Không tìm thấy mã nhân viên cần xóa!!");
 				txtMaNV.requestFocus();
 				txtMaNV.selectAll();
 				return;

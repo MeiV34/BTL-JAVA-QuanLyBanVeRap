@@ -370,6 +370,9 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		}else if(o.equals(btnTimKiem)) {
 			if(txtTimKiem.getText().equalsIgnoreCase("")) 
 				JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
+		}else if(o.equals(btnXem)) {
+			if(txtTimKiem.getText().equalsIgnoreCase("")) 
+				JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
 		}
 	}
 
