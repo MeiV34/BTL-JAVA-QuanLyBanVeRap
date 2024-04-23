@@ -63,6 +63,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private FrmNhanVien frmNhanVien;
 	private FrmKhachHang frmKhachHang;
 	private FrmPhong frmPhong;
+	private FrmVe frmVe;
 	private JPanel pnlNV, pnlVe, pnlKH, pnlPhong;
 	
 	public FrmPhim() throws IOException, SQLException, ParseException {
@@ -75,6 +76,8 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
             JOptionPane.showMessageDialog(null, "Không thể kết nối đến cơ sở dữ liệu");
             return;
         }
+        
+        // Pnl All
 		JPanel pnlAll = new JPanel();
 		pnlAll.setLayout(new BorderLayout());
 		
@@ -538,6 +541,14 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg) {
 				switchPanels(pnlNV);
+				
+				 btnMain.setBackground(new Color(204, 241, 157));
+				 btnPhim.setBackground(new Color(204, 241, 157));
+	             btnLich.setBackground(new Color(204, 241, 157));
+	             btnVe.setBackground(new Color(204, 241, 157));
+	             btnPhong.setBackground(new Color(204, 241, 157));
+	             btnKhachHang.setBackground(new Color(204, 241, 157));
+	             btnNhanVien.setBackground(new Color(12, 138, 255));
 			}
 		});
 		
@@ -548,6 +559,14 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnKhachHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg) {
 				switchPanels(pnlKH);
+				
+				btnMain.setBackground(new Color(204, 241, 157));
+				btnPhim.setBackground(new Color(204, 241, 157));
+	            btnLich.setBackground(new Color(204, 241, 157));
+	            btnVe.setBackground(new Color(204, 241, 157));
+	            btnPhong.setBackground(new Color(204, 241, 157));
+	            btnKhachHang.setBackground(new Color(12, 138, 255));  
+	            btnNhanVien.setBackground(new Color(204, 241, 157)); 
 			}
 		});
 		
@@ -558,18 +577,30 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg) {
 				switchPanels(pnlPhong);
+				
+				btnMain.setBackground(new Color(204, 241, 157));
+				btnPhim.setBackground(new Color(204, 241, 157));
+	            btnLich.setBackground(new Color(204, 241, 157));
+	            btnVe.setBackground(new Color(204, 241, 157));
+	            btnPhong.setBackground(new Color(12, 138, 255));
+	            btnKhachHang.setBackground(new Color(204, 241, 157));  
+	            btnNhanVien.setBackground(new Color(204, 241, 157)); 
 			}
 		});
 		
-//		// Tạo Frame vé
-//		frmBanVe = new FrmBanVe();
-//		pnlVe = frmBanVe.frmVe();
-//		DonBanVe.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				switchPanels(pnlVe);
-//			}
-//		});
+		// Tạo Frame vé
+		frmVe = new FrmVe();
+		pnlVe = frmVe.taoFrmVe();
+		DonBanVe.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switchPanels(pnlVe);
+				
+				DonBanVe.setBackground(new Color(12, 138, 255));
+				ChiTietDonDatVe.setBackground(new Color(204, 241, 157)); 
+				ChiTietDonBanVe.setBackground(new Color(204, 241, 157)); 
+			}
+		});
 
 		layeredPane.add(pnlCenMain, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimUpdate, JLayeredPane.PALETTE_LAYER); 

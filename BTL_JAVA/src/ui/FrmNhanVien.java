@@ -100,7 +100,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	
 	public JPanel taoFrmNhanVien() {
 		JPanel pn_NV= new JPanel();
-		pn_NV.setBackground(new Color(228, 243, 208));
+		pn_NV.setBackground(new Color(65, 60, 60));
 		pn_NV.setLayout(null);
 		setLocation(250, 30);
 		
@@ -136,7 +136,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		pnNgaySinh.add(lblNgayVaoLam=new JLabel("Ngày vào làm"));
 		pnNgaySinh.add(txtNgayVaoLam=new JDateChooser());
 		txtNgayVaoLam.setDateFormatString("dd-MM-yyyy");
-//		JFormattedTextField txtNgaySinh=new JFormattedTextField(new MaskFormatter("dd/MM/yyyy"));
 		
 		pnTXT.add(pnNgaySinh);
 		
@@ -182,7 +181,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		flowLayout_7.setHgap(70);
 		pnChucVu.setBackground(new Color(204, 241, 157));
 		pnChucVu.add(lblChucVu=new JLabel("Chức vụ"));
-//		pnChucVu.add(txtChucVu=new JTextField(15));
 		cbxChucVu=new JComboBox();
 		cbxChucVu.setModel(new DefaultComboBoxModel(new String[] {"Quản lý","Nhân viên"}));
 		cbxChucVu.setBackground(new Color(255,255,255));
@@ -229,7 +227,6 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		
 		lblMaNV.setPreferredSize(lblSDT.getPreferredSize());
 		lblTenNV.setPreferredSize(lblSDT.getPreferredSize());
-//		lblNgayVaoLam.setPreferredSize(lblSDT.getPreferredSize());
 		lblLuong.setPreferredSize(lblSDT.getPreferredSize());
 		lblDC.setPreferredSize(lblSDT.getPreferredSize());
 		lblMail.setPreferredSize(lblSDT.getPreferredSize());
@@ -336,17 +333,9 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		}
 		if(i==2) {
 			dsNV =nvDao.timTheoMa_VerK(str);
-//			int row=modelDanhSachNV.getRowCount();
-//			for (int j = row-1; j>= 0; j--) {
-//				modelDanhSachNV.removeRow(j);
-//			}
 		}
 		if(i==3) {
 			dsNV =nvDao.timTheoChucVu_VerK(str);
-//			int row=modelDanhSachNV.getRowCount();
-//			for (int j = row-1; j>= 0; j--) {
-//				modelDanhSachNV.removeRow(j);
-//			}
 		}
 		for (NhanVien nv : dsNV) {
 			// Format ngay
@@ -560,7 +549,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtTenNV.setText(modelDanhSachNV.getValueAt(row, 1).toString());
 		Date date;
 		try {
-			date = new SimpleDateFormat("dd-MM-yyyy").parse(modelDanhSachNV.getValueAt(row, 2).toString());
+			date = new SimpleDateFormat("yyyy-mm-dd").parse(modelDanhSachNV.getValueAt(row, 2).toString());
 			txtNgayVaoLam.setDate(date);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
