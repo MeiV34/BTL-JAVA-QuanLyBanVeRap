@@ -41,9 +41,9 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import connectDB.ConnectDB;
 import DAO.LichChieu_DAO;
 import DAO.Ve_DAO;
-import connectDB.ConnectDB;
 import entity.ChiTietSuatChieu;
 import entity.LichChieu;
 import entity.Phim;
