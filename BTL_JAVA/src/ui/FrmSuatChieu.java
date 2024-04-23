@@ -259,7 +259,7 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String ngayChieu = dateFormat.format(sc.getLichChieu().getNgayChieu());
 			modelDanhSachSC.addRow(new Object[] { sc.getMaSC(), ngayChieu
-					,sc.getPhong().getMaPhong(),sc.getPhim().getTenPhim(),sc.getSuatChieu()});
+					,sc.getPhong().getTenPhong(),sc.getPhim().getTenPhim(),sc.getSuatChieu()});
 			
 		}
 	}
@@ -408,10 +408,22 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 //				JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
 //		}
 	}
+	public int checkCbx(JComboBox cbx, String str) {
+		int index=0;
+		for (int i = 0; i < cbx.getItemCount(); i++) {
+			String cbxItem=cbx.getItemAt(i).toString();
+			if(cbxItem.contains(str)) {
+				index=i;
+				break;
+			}
+		}
+		return index;
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int row = table.getSelectedRow();
+		txtMaSC.setText(modelDanhSachSC.getValueAt(row, 0).toString());
 		Date date;
 		try {
 			date = new SimpleDateFormat("dd-MM-yyyy").parse(modelDanhSachSC.getValueAt(row, 1).toString());
@@ -420,7 +432,9 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		btnXem.setEnabled(true);
+		cbxPhong.setSelectedIndex(checkCbx(cbxPhong, modelDanhSachSC.getValueAt(row, 2).toString()));
+		cbxPhim.setSelectedIndex(checkCbx(cbxPhim, modelDanhSachSC.getValueAt(row, 3).toString()));
+		txtTG.setText(modelDanhSachSC.getValueAt(row, 4).toString());
 		txtMaSC.setEditable(false);
 	}
 
