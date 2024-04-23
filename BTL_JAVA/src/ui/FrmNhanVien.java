@@ -365,7 +365,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 	private boolean valid() {
 		if(txtMaNV.getText().equals("") || txtTenNV.getText().equals("") || txtNgayVaoLam.getDate().equals("") || 
 				txtSDT.getText().equals("") || txtLuong.getText().equals("") ||txtDC.getText().equals("") || 
-				txtMail.getText().equals("")||txtTK.getText().equals("") ||txtMK.getText().equals("")) {
+				txtMail.getText().equals("")) {
 						JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
 						return false;
 					}
@@ -427,7 +427,12 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 					nv.setTenNV(txtTenNV.getText());
 					nv.setNgayVaoLam(ngayVaoLam);
 					nv.setSdt(txtSDT.getText());
-					nv.setLuong(Double.parseDouble(txtLuong.getText()));
+					try {
+						nv.setLuong(Double.parseDouble(txtLuong.getText()));
+					} catch (NumberFormatException e2) {
+						JOptionPane.showMessageDialog(this,"Vui lòng nhập số");
+					}
+					
 					nv.setDiaChi(txtDC.getText());
 					nv.setEmail(txtMail.getText());
 					nv.setChucVu(cbxChucVu.getSelectedItem().toString());
@@ -502,7 +507,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 						JOptionPane.YES_NO_OPTION);
 				if (n == 0) {
 					NhanVien nv = new NhanVien();
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 					String strNgayVaoLam = dateFormat.format(txtNgayVaoLam.getDate());
 					java.sql.Date ngayVaoLam = java.sql.Date.valueOf(strNgayVaoLam);
 					
@@ -563,7 +568,7 @@ public class FrmNhanVien extends JFrame implements ActionListener,MouseListener 
 		txtTenNV.setText(modelDanhSachNV.getValueAt(row, 1).toString());
 		Date date;
 		try {
-			date = new SimpleDateFormat("yyyy-mm-dd").parse(modelDanhSachNV.getValueAt(row, 2).toString());
+			date = new SimpleDateFormat("dd-MM-yyyy").parse(modelDanhSachNV.getValueAt(row, 2).toString());
 			txtNgayVaoLam.setDate(date);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block

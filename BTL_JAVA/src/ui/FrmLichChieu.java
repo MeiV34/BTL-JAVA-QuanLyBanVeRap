@@ -193,7 +193,7 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 		btnXem.setForeground(new Color(0, 0, 0));
 		btnXem.setBounds(486, 20, 76, 34);
 		pntblNV.add(btnXem);
-		layeredPane.setSize(1035, 682);
+		layeredPane.setSize(1035, 681);
 		
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
