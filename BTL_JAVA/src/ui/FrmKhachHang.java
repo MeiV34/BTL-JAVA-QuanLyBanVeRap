@@ -315,19 +315,19 @@ public class FrmKhachHang extends JFrame implements ActionListener, MouseListene
 
 		if (!hoTen.matches("^[\\p{Lu}][\\p{L}]*(?:[\\s'.][\\p{Lu}][\\p{L}]*)*$")) {
 			txtHoTen.requestFocus();
-            JOptionPane.showMessageDialog(this, "Họ tên gồm nhiều từ ngăn cách bởi khoảng trắng, ký tự đầu mỗi từ phải viết hoa, có thể có '.\nKhông chứa các ký tự đặc biệt khác");
+            JOptionPane.showMessageDialog(this, "Họ tên gồm nhiều từ ngăn cách bởi khoảng trắng, ký tự đầu mỗi từ phải viết hoa, có thể có '.\nKhông chứa các ký tự đặc biệt khác", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		
 		if (!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")) {
 			txtEmail.requestFocus();
-			JOptionPane.showMessageDialog(this, "Email không đúng cú pháp!");
+			JOptionPane.showMessageDialog(this, "Email không đúng cú pháp!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		
 		if (!sdt.matches("^0([3|4|5|7|8|9])\\d{8}")) {
 			txtSdt.requestFocus();
-            JOptionPane.showMessageDialog(this, "Số điện thoại không đúng!");
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng số điện thoại!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		return true;

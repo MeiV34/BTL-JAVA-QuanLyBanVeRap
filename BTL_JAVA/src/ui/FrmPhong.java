@@ -307,19 +307,19 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 
 		if (!ma.matches("P\\d{3}$")) {
 			txtMa.requestFocus();
-            JOptionPane.showMessageDialog(this, "Mã phòng bắt đầu bằng P và theo sau là 3 chữ số");
+            JOptionPane.showMessageDialog(this, "Mã phòng bắt đầu bằng P và theo sau là 3 chữ số","Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		
 		if (!ten.matches("\\s*\\w+$")) {
 			txtTen.requestFocus();
-			JOptionPane.showMessageDialog(this, "Tên phòng chỉ được chứa các ký tự chữ cái, số và dấu gạch dưới, và không được bắt đầu hoặc kết thúc bằng khoảng trắng.");
+			JOptionPane.showMessageDialog(this, "Tên phòng chỉ được chứa các ký tự chữ cái, số và dấu gạch dưới, và không được bắt đầu hoặc kết thúc bằng khoảng trắng.", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		
 		if (!soLuong.matches("^[1-9]\\d*$")) {
 			txtSLGhe.requestFocus();
-            JOptionPane.showMessageDialog(this, "Số lượng ghế phải lớn hơn 0!");
+            JOptionPane.showMessageDialog(this, "Số lượng ghế phải lớn hơn 0!", "Lỗi!", JOptionPane.ERROR_MESSAGE);
             return false;
 		}
 		return true;
