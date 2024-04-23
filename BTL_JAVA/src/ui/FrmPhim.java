@@ -67,7 +67,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private JPanel pnlNV, pnlVe,pnlKH, pnlPhong;
 	private JPanel pnlLichChieu;
 	private FrmKhachHang frmKH;
-//	private FrmBanVe frmBanVe;
+	
 	public void resetTargetMenu() {
 		btnMain.setBackground(new Color(204, 241, 157));
         btnPhim.setBackground(new Color(204, 241, 157));
@@ -158,7 +158,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		// Label 
 		labImgLogo = new JLabel(imgIcon1);
 		labTenRap = new JLabel("Rạp phim BHV");
-		labTenRap.setForeground(Color.white);
+		labTenRap.setForeground(new Color(65, 60, 60));
 		labTenRap.setFont(font2);
 		
 		labPoster1 = new JLabel(imgIcon3);
@@ -325,11 +325,11 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	        // Đặt JMenuBar vào JFrame
 	        setJMenuBar(menuBar);
 
-		
+//	       (228,243,208)
 		// Left
 		JPanel pnlLeft = new JPanel();
 		pnlLeft.setLayout(new BoxLayout(pnlLeft, BoxLayout.Y_AXIS));
-		pnlLeft.setBackground(new Color(65, 60, 60));
+		pnlLeft.setBackground(new Color(228,243,208));
 		
 			JPanel pnlSubLeft1 = new JPanel();
 			pnlSubLeft1.setLayout(new BoxLayout(pnlSubLeft1, BoxLayout.X_AXIS));
@@ -337,7 +337,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			pnlSubLeft1.add(labImgLogo);
 			pnlSubLeft1.add(Box.createHorizontalStrut(10));
 			pnlSubLeft1.add(labTenRap);
-			pnlSubLeft1.setBackground(new Color(65, 60, 60));
+			pnlSubLeft1.setBackground(new Color(228,243,208));
 			
 			JPanel pnlSubLeft2 = new JPanel();
 			pnlSubLeft2.setLayout(new GridLayout(7,1,3,3));
@@ -348,7 +348,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			pnlSubLeft2.add(btnPhong);
 			pnlSubLeft2.add(btnKhachHang);
 			pnlSubLeft2.add(btnNhanVien);
-			pnlSubLeft2.setBackground(new Color(65, 60, 60));
+			pnlSubLeft2.setBackground(new Color(228,243,208));
 			pnlLeft.add(pnlSubLeft1);
 			pnlLeft.add(pnlSubLeft2);
 			
@@ -361,7 +361,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			JPanel pnlCenMain = new JPanel();
 			pnlCenMain.setLayout(new BoxLayout(pnlCenMain, BoxLayout.X_AXIS));
 			pnlCenMain.setBounds(0, 0,1035,682);
-			pnlCenMain.setBackground(new Color(65, 60, 60));
+			pnlCenMain.setBackground(new Color(228,243,208));
 			pnlCenMain.add(Box.createHorizontalStrut(55));
 			pnlCenMain.add(labPoster1);
 			pnlCenMain.add(Box.createHorizontalStrut(55));
@@ -370,11 +370,11 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			JPanel pnlCenPhimUpdate = new JPanel();
 			pnlCenPhimUpdate.setLayout(new BorderLayout());
 			pnlCenPhimUpdate.setBounds(0, 0,1035,682);
-			pnlCenPhimUpdate.setBackground(new Color(65, 60, 60));
+			pnlCenPhimUpdate.setBackground(new Color(228,243,208));
 				JPanel pnlContentUpdate = new JPanel();
 				pnlContentUpdate.setLayout(new BorderLayout());
 				pnlContentUpdate.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-				pnlContentUpdate.setBackground(new Color(65, 60, 60));
+				pnlContentUpdate.setBackground(new Color(228,243,208));
 
 					JPanel pnlCenTopUpdate = new JPanel();
 					pnlCenTopUpdate.setLayout(new FlowLayout());
@@ -440,11 +440,11 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			JPanel pnlCenPhimFind = new JPanel();
 			pnlCenPhimFind.setLayout(new BorderLayout());
 			pnlCenPhimFind.setBounds(0, 0,1035,682);
-			pnlCenPhimFind.setBackground(new Color(65, 60, 60));
+			pnlCenPhimFind.setBackground(new Color(228,243,208));
 				JPanel pnlContentFind = new JPanel();
 				pnlContentFind.setLayout(new BoxLayout(pnlContentFind, BoxLayout.Y_AXIS));
 				pnlContentFind.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-				pnlContentFind.setBackground(new Color(65, 60, 60));
+				pnlContentFind.setBackground(new Color(228,243,208));
 					JPanel pnlCenTopTopFind = new JPanel();
 					pnlCenTopTopFind.setLayout(new BoxLayout(pnlCenTopTopFind, BoxLayout.X_AXIS));
 					Border outBorder = BorderFactory.createTitledBorder("Tìm kiếm");
@@ -484,9 +484,8 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnMain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               
+            	resetTargetMenu();
                 btnMain.setBackground(new Color(12, 138, 255));
-                resetTargetMenu();
                 switchPanels(pnlCenMain);
             }
         });
@@ -525,7 +524,6 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnVe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Thay đổi kích thước của nút
             	resetTargetMenu();
                 btnVe.setBackground(new Color(12, 138, 255));
             }
@@ -534,45 +532,82 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		JPanel pnlPhong = frmPhong.taoFrmPhong();
 		btnPhong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//            	reset màu xong set lại màu btn được nhấn
 				resetTargetMenu();
 				btnPhong.setBackground(new Color(12, 138, 255));
 				switchPanels(pnlPhong);
 		}
-	});
+		});
 		frmKH=new FrmKhachHang();
 		JPanel pnlKH = frmKH.taoFrmKhachHang();
 		btnKhachHang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//            	reset màu xong set lại màu btn được nhấn
 				resetTargetMenu();
 				btnKhachHang.setBackground(new Color(12, 138, 255));
 				switchPanels(pnlKH);
 		}
-	});
+		});
+		frmVe = new FrmVe();
+		pnlVe = frmVe.taoFrmVe();
+		btnVe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				resetTargetMenu();
+				btnPhong.setBackground(new Color(12, 138, 255));
+			}
+		});
+		
+		DonBanVe.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DonBanVe.setBackground(new Color(12, 138, 255));
+				ChiTietDonDatVe.setBackground(new Color(204, 241, 157));
+				ChiTietDonBanVe.setBackground(new Color(204, 241, 157));
+	            switchPanels(pnlVe);
+			}
+		});
+		ChiTietDonDatVe.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ChiTietDonDatVe.setBackground(new Color(12, 138, 255));
+				DonBanVe.setBackground(new Color(204, 241, 157));
+				ChiTietDonBanVe.setBackground(new Color(204, 241, 157));
+	            switchPanels(pnlVe);
+			}
+		});
+		ChiTietDonBanVe.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				ChiTietDonBanVe.setBackground(new Color(12, 138, 255));
+				DonBanVe.setBackground(new Color(204, 241, 157));
+				ChiTietDonDatVe.setBackground(new Color(204, 241, 157));
+	            switchPanels(pnlVe);
+			}
+		});
+		
 		frmLichChieu = new FrmLichChieu();
 		pnlLichChieu =  frmLichChieu.taoFrmLichChieu();
 		btnLich.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//            	reset màu xong set lại màu btn được nhấn
-				resetTargetMenu();
 				btnLich.setBackground(new Color(12, 138, 255));
 				switchPanels(pnlLichChieu);
 		}
-	});
+		});
 		frmNhanVien = new FrmNhanVien();
 		pnlNV =  frmNhanVien.taoFrmNhanVien();
 		btnNhanVien.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg) {
-				switchPanels(pnlNV);
 				resetTargetMenu();
 				btnNhanVien.setBackground(new Color(12, 138, 255));
+				switchPanels(pnlNV);
 		}
-	});
+		});
 
 		layeredPane.add(pnlCenMain, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimUpdate, JLayeredPane.PALETTE_LAYER); 
 		layeredPane.add(pnlCenPhimFind, JLayeredPane.PALETTE_LAYER);
+		
         // Đọc dữ liệu vào bảng
 		DocDuLieuVaoTable();
 		
@@ -581,9 +616,9 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		btnUpdate.addActionListener(this);
 		btnDelAll.addActionListener(this);
 		btnFind.addActionListener(this);
-		tablePhimUpdate.addMouseListener(this);
 		btnFindMaPhim.addActionListener(this);
 		btnFindTenPhim.addActionListener(this);
+		tablePhimUpdate.addMouseListener(this);
 		
 
 		pnlAll.add(layeredPane);

@@ -7,6 +7,9 @@ public class Phong {
     private String tenPhong;
     private int soLuongGhe;
     
+	public Phong() {
+		super();
+	}
 	public Phong(String maPhong, String tenPhong, int soLuongGhe) {
 		super();
 		this.maPhong = maPhong;
