@@ -1,12 +1,22 @@
 package common;
 
 public enum Utils {
-	INSTANCE; // Định nghĩa một instance duy nhất của enum
+    GIAVE(50000);
+
+    private final int value;
+
+    Utils(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 
     public static String tangMaKH(String maKH) {
         int number = Integer.parseInt(maKH);
         number++;
-        String newNumberStr = String.valueOf(number);
-        return newNumberStr;
+        return String.valueOf(number);
     }
 }
+

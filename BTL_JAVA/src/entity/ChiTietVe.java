@@ -1,48 +1,87 @@
 package entity;
 
+import java.sql.Date;
+import java.sql.Time;
+
 public class ChiTietVe {
-	private Ve ve;
-	private NhanVien nhanVien;
-	private Double tongTien;
-	private int soLuongVe;
+	private String maVe;
+	private String tenPhim;
+	private Date ngayChieu;
+	private Time suatChieu;
+	private String tenPhong;
+	private String dsGhe;
+	private String tenKH;
+	private String sdt;
+	private int soLuongGhe;
 	
-	public ChiTietVe(Ve ve) {
+	
+	public ChiTietVe(String maVe, String tenPhim, Date ngayChieu, Time suatChieu, String tenPhong, String dsGhe,
+			String tenKH, String sdt, int soLuongGhe) {
 		super();
-		this.ve = ve;
+		this.maVe = maVe;
+		this.tenPhim = tenPhim;
+		this.ngayChieu = ngayChieu;
+		this.suatChieu = suatChieu;
+		this.tenPhong = tenPhong;
+		this.dsGhe = dsGhe;
+		this.tenKH = tenKH;
+		this.sdt = sdt;
+		this.soLuongGhe = soLuongGhe;
 	}
-	public ChiTietVe() {
-		super();
+	public String getMaVe() {
+		return maVe;
 	}
-	public ChiTietVe(Ve ve, NhanVien nhanVien, Double tongTien, int soLuongVe) {
-		super();
-		this.ve = ve;
-		this.nhanVien = nhanVien;
-		this.tongTien = tongTien;
-		this.soLuongVe = soLuongVe;
+	public void setMaVe(String maVe) {
+		this.maVe = maVe;
 	}
-	public Ve getVe() {
-		return ve;
+	public String getTenPhim() {
+		return tenPhim;
 	}
-	public void setVe(Ve ve) {
-		this.ve = ve;
+	public void setTenPhim(String tenPhim) {
+		this.tenPhim = tenPhim;
 	}
-	public NhanVien getNhanVien() {
-		return nhanVien;
+	public Date getNgayChieu() {
+		return ngayChieu;
 	}
-	public void setNhanVien(NhanVien nhanVien) {
-		this.nhanVien = nhanVien;
+	public void setNgayChieu(Date ngayChieu) {
+		this.ngayChieu = ngayChieu;
 	}
-	public Double getTongTien() {
-		return tongTien;
+	public Time getSuatChieu() {
+		return suatChieu;
 	}
-	public void setTongTien(Double tongTien) {
-		this.tongTien = tongTien;
+	public void setSuatChieu(Time suatChieu) {
+		this.suatChieu = suatChieu;
 	}
-	public int getSoLuongVe() {
-		return soLuongVe;
+	public String getTenPhong() {
+		return tenPhong;
 	}
-	public void setSoLuongVe(int soLuongVe) {
-		this.soLuongVe = soLuongVe;
+	public void setTenPhong(String tenPhong) {
+		this.tenPhong = tenPhong;
 	}
+	public String getDsGhe() {
+		return dsGhe;
+	}
+	public void setDsGhe(String dsGhe) {
+		this.dsGhe = dsGhe;
+	}
+	public String getTenKH() {
+		return tenKH;
+	}
+	public void setTenKH(String tenKH) {
+		this.tenKH = tenKH;
+	}
+	public String getSdt() {
+		return sdt;
+	}
+	public void setSdt(String sdt) {
+		this.sdt = sdt;
+	}
+	public int getSoLuongGhe() {
+		return soLuongGhe;
+	}
+	public void setSoLuongGhe(int soLuongGhe) {
+		this.soLuongGhe = soLuongGhe;
+	}
+
 	
 }

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -72,14 +73,14 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 	private JComboBox cbxPhong;
 	private JComboBox cbxPhim;
 
-	public FrmSuatChieu() throws ParseException  {
-		getContentPane().add(taoFrmSuatChieu());
+	public FrmSuatChieu(java.sql.Date dt) throws ParseException  {
+		getContentPane().add(taoFrmSuatChieu(dt));
 		setSize(1084,768);
 		setVisible(true);
 		setTitle("test");
 	}
 	
-	public JPanel taoFrmSuatChieu() {
+	public JPanel taoFrmSuatChieu(java.sql.Date dt) {
 		JPanel pn_SuatChieu= new JPanel();
 		pn_SuatChieu.setBackground(new Color(228, 243, 208));
 		pn_SuatChieu.setLayout(null);
@@ -213,7 +214,7 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 			}
 		};
 		scDao=new SuatChieu_DAO();
-		docDuLieuDatabaseVaoTable();
+		docDuLieuDatabaseVaoTable(dt);
 
 		JTableHeader header1 = table.getTableHeader();
 		header1.setBackground(new Color(238, 233, 233));
@@ -251,9 +252,9 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 		pn_SuatChieu.setSize(1084,768);
 		return pn_SuatChieu;
 	}
-	public void docDuLieuDatabaseVaoTable() {
+	public void docDuLieuDatabaseVaoTable(java.sql.Date dt) {
 		modelDanhSachSC.getDataVector().removeAllElements();
-		dsSC = scDao.getAllSC();
+		dsSC = scDao.getAllSC(dt);
 		for (SuatChieu sc : dsSC) {
 			// Format ngay
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

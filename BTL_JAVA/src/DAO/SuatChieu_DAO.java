@@ -102,16 +102,16 @@ public class SuatChieu_DAO {
 		return dsSC;
 	}
 
-	public List<SuatChieu> getAllSC() {
+	public List<SuatChieu> getAllSC(Date dt) {
 		List<SuatChieu> dsSC = new ArrayList<SuatChieu>();
 		PreparedStatement stmt = null;
-		String sql = "SELECT sc.MaSuatChieu AS MaSuatChieu,lc.MaLichChieu AS MaLichChieu,p.MaPhong AS MaPhong,\r\n"
-				+ "f.MaPhim AS MaPhim,lc.NgayChieu \r\n"
-				+ "AS NgayChieu, p.soPhong AS tenPhong, f.TenPhim \r\n"
-				+ "AS tenPhim , sc.SuatChieu as GioChieu\r\n"
-				+ "FROM SuatChieu sc\r\n"
-				+ "JOIN LichChieu lc ON sc.MaLichChieu = lc.MaLichChieu \r\n"
-				+ "JOIN Phong p ON sc.MaPhong = p.MaPhong\r\n"
+		String sql = "SELECT sc.MaSuatChieu AS MaSuatChieu,lc.MaLichChieu AS MaLichChieu,p.MaPhong AS MaPhong,"
+				+ "f.MaPhim AS MaPhim,lc.NgayChieu"
+				+ "AS NgayChieu, p.soPhong AS tenPhong, f.TenPhim"
+				+ "AS tenPhim , sc.SuatChieu as GioChieu"
+				+ "FROM SuatChieu sc"
+				+ "JOIN LichChieu lc ON sc.MaLichChieu = lc.MaLichChieu"
+				+ "JOIN Phong p ON sc.MaPhong = p.MaPhong"
 				+ "JOIN Phim f ON sc.MaPhim = f.MaPhim";
 		try {
 			stmt = ketNoi.prepareStatement(sql);

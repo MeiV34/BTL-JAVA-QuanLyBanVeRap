@@ -67,6 +67,8 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	private JPanel pnlNV, pnlVe,pnlKH, pnlPhong;
 	private JPanel pnlLichChieu;
 	private FrmKhachHang frmKH;
+	private FrmDanhSachVeBan frmDonBanVe;
+	private JPanel pnlDonBanVe;
 	
 	public void resetTargetMenu() {
 		btnMain.setBackground(new Color(204, 241, 157));
@@ -555,6 +557,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 			}
 		});
 		
+		
 		DonBanVe.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -565,6 +568,9 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 	            switchPanels(pnlVe);
 			}
 		});
+
+		frmDonBanVe = new FrmDanhSachVeBan();
+		pnlDonBanVe = frmDonBanVe.taoFrmDanhSachVeBan();
 		ChiTietDonDatVe.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -572,7 +578,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 				ChiTietDonDatVe.setBackground(new Color(12, 138, 255));
 				DonBanVe.setBackground(new Color(204, 241, 157));
 				ChiTietDonBanVe.setBackground(new Color(204, 241, 157));
-	            switchPanels(pnlVe);
+	            switchPanels(pnlDonBanVe);
 			}
 		});
 		ChiTietDonBanVe.addActionListener(new ActionListener() {
@@ -590,6 +596,7 @@ public class FrmPhim extends JFrame implements ActionListener,MouseListener{
 		pnlLichChieu =  frmLichChieu.taoFrmLichChieu();
 		btnLich.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				resetTargetMenu();
 				btnLich.setBackground(new Color(12, 138, 255));
 				switchPanels(pnlLichChieu);
 		}
