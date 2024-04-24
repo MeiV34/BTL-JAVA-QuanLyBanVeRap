@@ -38,7 +38,7 @@ public class Ve_DAO {
 				String idSC = rs.getString(1);
 				String tenPhim = rs.getString(2);
 				java.sql.Date ngayChieu = rs.getDate(3);
-				int soPhong = rs.getInt(4);
+				String soPhong = rs.getString(4);
 				Time suatChieu = rs.getTime(5);
 				ChiTietSuatChieu sc = new ChiTietSuatChieu(idSC, tenPhim, ngayChieu, soPhong, suatChieu);
 				listSuatChieu.add(sc);
@@ -55,7 +55,7 @@ public class Ve_DAO {
 		con = ConnectDB.getConnection();
 	    List<ChiTietSuatChieu> dsSC = new ArrayList<>();
 	    PreparedStatement stmt = null;
-	    String sql = "SELECT SuatChieu.MaSuatChieu, Phim.TenPhim, LichChieu.NgayChieu, Phong.soPhong, SuatChieu.SuatChieu " +
+	    String sql = "SELECT SuatChieu.MaSuatChieu, Phim.TenPhim, LichChieu.NgayChieu, Phong.TenPhong, SuatChieu.SuatChieu " +
 	                 "FROM SuatChieu " +
 	                 "JOIN LichChieu ON SuatChieu.MaLichChieu = LichChieu.MaLichChieu " +
 	                 "JOIN Phim ON Phim.MaPhim = SuatChieu.MaPhim " +
@@ -69,7 +69,7 @@ public class Ve_DAO {
 	            String maSC = rs.getString(1);
 	            String phim = rs.getString(2);
 	            Date ngayChieu = rs.getDate(3); // Đây là java.sql.Date, không cần chuyển đổi
-	            int phong = rs.getInt(4);
+	            String phong = rs.getString(4);
 	            Time sc = rs.getTime(5);
 	            ChiTietSuatChieu ctsc = new ChiTietSuatChieu(maSC, phim, ngayChieu, phong, sc);
 	            dsSC.add(ctsc);

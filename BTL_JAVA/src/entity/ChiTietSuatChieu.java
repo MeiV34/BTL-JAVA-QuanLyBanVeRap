@@ -7,13 +7,13 @@ public class ChiTietSuatChieu {
 	private String maSC;
 	private String phim;
 	private Date ngayChieu;
-	private int phong;
+	private String phong;
 	private Time sc;
 	
 	public ChiTietSuatChieu() {
 		super();
 	}
-	public ChiTietSuatChieu(String suatChieu, String phim, Date ngayChieu, int phong, Time sc) {
+	public ChiTietSuatChieu(String suatChieu, String phim, Date ngayChieu, String phong, Time sc) {
 		super();
 		this.maSC = suatChieu;
 		this.phim = phim;
@@ -39,10 +39,10 @@ public class ChiTietSuatChieu {
 	public void setNgayChieu(Date ngayChieu) {
 		this.ngayChieu = ngayChieu;
 	}
-	public int getPhong() {
+	public String getPhong() {
 		return phong;
 	}
-	public void setPhong(int phong) {
+	public void setPhong(String phong) {
 		this.phong = phong;
 	}
 	public Time getSc() {
