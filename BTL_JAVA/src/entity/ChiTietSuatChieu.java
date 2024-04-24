@@ -9,6 +9,10 @@ public class ChiTietSuatChieu {
 	private Date ngayChieu;
 	private int phong;
 	private Time sc;
+	
+	public ChiTietSuatChieu() {
+		super();
+	}
 	public ChiTietSuatChieu(String suatChieu, String phim, Date ngayChieu, int phong, Time sc) {
 		super();
 		this.maSC = suatChieu;

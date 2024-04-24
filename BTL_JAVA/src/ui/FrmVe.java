@@ -11,12 +11,15 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
+import java.util.EventObject;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -38,9 +41,11 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
-import DAO.Ve_DAO;
 import connectDB.ConnectDB;
+import DAO.LichChieu_DAO;
+import DAO.Ve_DAO;
 import entity.ChiTietSuatChieu;
+import entity.LichChieu;
 import entity.Phim;
 
 public class FrmVe extends JFrame implements ActionListener,MouseListener {
@@ -57,6 +62,7 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 	private DefaultTableModel modelLichChieu, modelSuatChieu;
 	private JScrollPane scrollLichChieu, scrollSuatChieu;
 	private Connection con;
+	private LichChieu_DAO lichChieu_DAO = new LichChieu_DAO(); 
 	private Ve_DAO ve_DAO = new Ve_DAO();
 	public FrmVe() throws ParseException, IOException  {
 		add(taoFrmVe());
@@ -133,15 +139,27 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		String[] suatchieu = {"Mã suất chiếu", "Phim", "Ngày chiếu","Phòng","Suất chiếu"};
 		modelLichChieu = new DefaultTableModel(lichchieu,0);
 		modelSuatChieu = new DefaultTableModel(suatchieu,0);
-		tableLichChieu = new JTable(modelLichChieu);
-		tableSuatChieu = new JTable(modelSuatChieu);
+		tableLichChieu = new JTable(modelLichChieu){
+			public boolean editCellAt(int row, int column, EventObject e) 
+			{ 
+				// Không cho chỉnh sửa giá trị trong table
+				return false;
+			}
+		};
+		tableSuatChieu = new JTable(modelSuatChieu){
+			public boolean editCellAt(int row, int column, EventObject e) 
+			{ 
+				// Không cho chỉnh sửa giá trị trong table
+				return false;
+			}
+		};
 		scrollLichChieu = new JScrollPane(tableLichChieu);
 		scrollSuatChieu = new JScrollPane(tableSuatChieu);
 		
 		// Panel
 		JPanel pnlVe = new JPanel();
 		pnlVe.setLayout(new BorderLayout());
-		pnlVe.setBackground(new Color(65, 60, 60));
+		pnlVe.setBackground(new Color(228,243,208));
 		pnlVe.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 			JPanel pnlVeLeft = new JPanel();
 			pnlVeLeft.setLayout(new BorderLayout());
@@ -259,14 +277,30 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		pnlVe.add(pnlVeRight, BorderLayout.CENTER);
 		
 		// ActionListener
-		
+		tableLichChieu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tableLichChieu.getSelectedRow();
+				Date ngayChieu = (Date) tableLichChieu.getModel().getValueAt(row, 1);
+				DocDuSCVaoTable(ngayChieu);
+			}
+		});
+		tableSuatChieu.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int selectedRow = tableSuatChieu.getSelectedRow();
+		        String maSuatChieu = (String) tableSuatChieu.getValueAt(selectedRow, 0); // Lấy mã suất chiếu từ bảng "Suất chiếu"
+		        
+		    }
+		});
+
 		// Dọc dữ liệu 
-		DocDuLieuSuatChieuVaoTable();
+		DocDuLCVaoTable();
 		
 		pnlVe.setSize(1040,645);
 		return pnlVe;
 	}
-	
+
 	public void DocDuLieuSuatChieuVaoTable() {
 		List<ChiTietSuatChieu> listSC = ve_DAO.getListSuatChieu();
 		for (ChiTietSuatChieu sc : listSC) {
@@ -275,15 +309,37 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		}
 		tableSuatChieu.setModel(modelSuatChieu);
 	}
-	
+	public void DocDuLCVaoTable() {
+		List<LichChieu> listchieus = lichChieu_DAO.getAllLC();
+		for (LichChieu lc : listchieus) {
+			modelLichChieu.addRow(new Object[] {lc.getMaLichChieu(),lc.getNgayChieu()});		
+		}
+		tableLichChieu.setModel(modelLichChieu);
+	}
 	private Icon createImage(URL resource) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public void XoaTrangTable() {
+		DefaultTableModel d = (DefaultTableModel) tableSuatChieu.getModel();
+		d.getDataVector().removeAllElements();
+	}
+	public void DocDuSCVaoTable(Date ngayChieu) {
+		XoaTrangTable();
+		List<ChiTietSuatChieu> suatChieu = ve_DAO.timTheoNgayChieu(ngayChieu);
+		for (ChiTietSuatChieu sc : suatChieu) {
+			modelSuatChieu.addRow(new Object[] {sc.getMaSC(),sc.getPhim(), sc.getNgayChieu(),
+					sc.getPhong(),sc.getSc()});			
+		}
+		tableSuatChieu.setModel(modelSuatChieu);
+	}
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		int row = tableLichChieu.getSelectedRow();
+		Date ngayChieu = (Date) tableLichChieu.getModel().getValueAt(row, 1);
+		DocDuSCVaoTable(ngayChieu);
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

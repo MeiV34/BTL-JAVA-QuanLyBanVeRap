@@ -87,7 +87,6 @@ public class NhanVien_DAO {
 		}
 		return n > 0;
 	}
-
 	public List<NhanVien> timTheoMa_VerK(String maNhanVien) {
 		dsNV = new ArrayList<NhanVien>();
 		NhanVien nv = new NhanVien();
@@ -165,9 +164,6 @@ public class NhanVien_DAO {
 		}
 		return dsNV;
 	}
-
-	
-
 	public List<NhanVien> getAllNV() {
 		List<NhanVien> dSNV = new ArrayList<NhanVien>();
 		PreparedStatement stmt = null;
@@ -196,7 +192,6 @@ public class NhanVien_DAO {
 		return dSNV;
 	}
 
-
 	public boolean xoaNhanVien(String maNhanVien) {
 		try {
 			PreparedStatement stmt = ketNoi.prepareStatement("delete from NhanVien where MaNhanVien = ?");
@@ -211,6 +206,4 @@ public class NhanVien_DAO {
 		}
 			return false;
 	}
-
-	
 }
