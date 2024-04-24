@@ -17,9 +17,8 @@ public class ConnectDB {
 		try {
 			String url = "jdbc:sqlserver://localhost:1433;databasename=RapBHV;trustServerCertificate=true;encrypt=true";
 			String user = "sa";
-			String pwd = "@Sapassword";
+			String pwd = "123";
 			con = DriverManager.getConnection(url, user, pwd);
-//			JOptionPane.showMessageDialog(null, "Connected!");
 		}catch(SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Unconnected!");
