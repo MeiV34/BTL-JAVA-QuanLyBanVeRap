@@ -4,13 +4,13 @@ import java.util.Objects;
 
 public class Phong {
     private String maPhong;
-    private String tenPhong;
+    private int tenPhong;
     private int soLuongGhe;
     
 	public Phong() {
 		super();
 	}
-	public Phong(String maPhong, String tenPhong, int soLuongGhe) {
+	public Phong(String maPhong, int tenPhong, int soLuongGhe) {
 		super();
 		this.maPhong = maPhong;
 		this.tenPhong = tenPhong;
@@ -26,10 +26,10 @@ public class Phong {
 	public void setMaPhong(String maPhong) {
 		this.maPhong = maPhong;
 	}
-	public String getTenPhong() {
+	public int getTenPhong() {
 		return tenPhong;
 	}
-	public void setTenPhong(String tenPhong) {
+	public void setTenPhong(int tenPhong) {
 		this.tenPhong = tenPhong;
 	}
 	public int getSoLuongGhe() {

@@ -73,14 +73,14 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 	private JComboBox cbxPhong;
 	private JComboBox cbxPhim;
 
-	public FrmSuatChieu(java.sql.Date dt) throws ParseException  {
-		getContentPane().add(taoFrmSuatChieu(dt));
+	public FrmSuatChieu() throws ParseException  {
+		getContentPane().add(taoFrmSuatChieu());
 		setSize(1084,768);
 		setVisible(true);
 		setTitle("test");
 	}
 	
-	public JPanel taoFrmSuatChieu(java.sql.Date dt) {
+	public JPanel taoFrmSuatChieu() {
 		JPanel pn_SuatChieu= new JPanel();
 		pn_SuatChieu.setBackground(new Color(228, 243, 208));
 		pn_SuatChieu.setLayout(null);
@@ -214,7 +214,7 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 			}
 		};
 		scDao=new SuatChieu_DAO();
-		docDuLieuDatabaseVaoTable(dt);
+		docDuLieuDatabaseVaoTable();
 
 		JTableHeader header1 = table.getTableHeader();
 		header1.setBackground(new Color(238, 233, 233));
@@ -252,9 +252,9 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 		pn_SuatChieu.setSize(1084,768);
 		return pn_SuatChieu;
 	}
-	public void docDuLieuDatabaseVaoTable(java.sql.Date dt) {
+	public void docDuLieuDatabaseVaoTable() {
 		modelDanhSachSC.getDataVector().removeAllElements();
-		dsSC = scDao.getAllSC(dt);
+		dsSC = scDao.getAllSC();
 		for (SuatChieu sc : dsSC) {
 			// Format ngay
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -294,7 +294,7 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		Object o=e.getSource();
+		Object o=e.getSource();
 //		if(o.equals(btnThem)) {
 //			if(valid()) {
 //				dsSC=scDao.getAllSC();
@@ -322,38 +322,40 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 //					}
 //				}
 //			}
-//		} else if(o.equals(btnXoa)) {
-//			dsSC = scDao.getAllLC();
-//			String maDB = "";
-//			int index = 0;
-//			for(LichChieu x: dsSC) {
-//				if(x.getMaLichChieu().equals(txtMaSC.getText() )) {
-//					index++;
-//					break;
-//				}
-//			}
-//			if(index == 0) {
-//				JOptionPane.showMessageDialog(this, "Không tìm thấy mã lịch chiếu cần xóa!!");
-//				txtMaSC.requestFocus();
-//				txtMaSC.selectAll();
-//				return;
-//			} else {
-//				for(LichChieu x: dsSC) {
-//					if(x.getMaLichChieu().equals(txtMaSC.getText() )) {
-//						maDB = x.getMaLichChieu();
-//						break;
-//					}
-//				}
-//			}
-//			int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa"
-//					+ " lịch chiếu với mã lịch chiếu là " +maDB+ " không?", "Cảnh báo",
-//					JOptionPane.YES_NO_OPTION);
-//			if(n==0) {
-//				if(scDao.xoaLichChieu(txtMaSC.getText())) {
-//					JOptionPane.showMessageDialog(this,"Xóa thành công");
-//					docDuLieuDatabaseVaoTable();
-//				}
-//			}
+//		} else
+		if(o.equals(btnXoa)) {
+			dsSC = scDao.getAllSC();
+			String maDB = "";
+			int index = 0;
+			for(SuatChieu x: dsSC) {
+				if(x.getMaSC().equals(txtMaSC.getText() )) {
+					index++;
+					break;
+				}
+			}
+			if(index == 0) {
+				JOptionPane.showMessageDialog(this, "Không tìm thấy mã suất chiếu cần xóa!!");
+				txtMaSC.requestFocus();
+				txtMaSC.selectAll();
+				return;
+			} else {
+				for(SuatChieu x: dsSC) {
+					if(x.getMaSC().equals(txtMaSC.getText() )) {
+						maDB = x.getMaSC();
+						break;
+					}
+				}
+			}
+			int n = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa"
+					+ " suâts chiếu với mã suất chiếu là " +maDB+ " không?", "Cảnh báo",
+					JOptionPane.YES_NO_OPTION);
+			if(n==0) {
+				if(scDao.xoaSuatChieu(txtMaSC.getText())) {
+					JOptionPane.showMessageDialog(this,"Xóa thành công");
+					docDuLieuDatabaseVaoTable();
+				}
+			}
+		}
 //		} else if(o.equals(btnSua)) {
 //			if(valid()) {
 //				dsSC = scDao.getAllLC();
@@ -398,13 +400,15 @@ public class FrmSuatChieu extends JDialog implements ActionListener,MouseListene
 //					}
 //				}
 //			}
-//		} else if(o.equals(btnLamMoi)) {
-//			txtMaSC.setText("");
-//			txtNgayChieu.setDate(null);
-//			docDuLieuDatabaseVaoTable();
-//			txtMaSC.setEditable(true);
+//		}
+			else if(o.equals(btnLamMoi)) {
+			txtMaSC.setText("");
+			txtNgayChieu.setDate(null);
+			docDuLieuDatabaseVaoTable();
+			txtMaSC.setEditable(true);
 //			txtPhong.setText("");
-//		}else if(o.equals(btnTimKiem)) {
+		}
+			//else if(o.equals(btnTimKiem)) {
 //			if(txtTimKiem.getText().equalsIgnoreCase("")) 
 //				JOptionPane.showMessageDialog(this,"Vui lòng nhập tên nhân viên");
 //		}

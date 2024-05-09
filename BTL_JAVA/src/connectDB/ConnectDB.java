@@ -19,7 +19,6 @@ public class ConnectDB {
 			String user = "kriscao";
 			String pwd = "07122002";
 			con = DriverManager.getConnection(url, user, pwd);
-//			JOptionPane.showMessageDialog(null, "Connected!");
 		}catch(SQLException e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Unconnected!");

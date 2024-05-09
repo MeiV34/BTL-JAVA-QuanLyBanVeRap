@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Time;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
@@ -18,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.List;
@@ -31,6 +33,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -53,19 +56,22 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 				   labMaKH, labTenKH, labEmail, labSDT,
 				   labThanhTien,
 				   labVND;
-	private JDateChooser txtSuatChieu;
 	private JTextField txtPhong, txtTenPhim, txtSoGhe, txtSoLuongVe,txtNgayChieu,
+						txtSuatChieu,
 	   				   txtMaKH, txtTenKH, txtEmail, txtSDT,
 					   txtThanhTien;
 	private JButton btnDatVe, btnBanVe;
 	private JTable tableLichChieu, tableSuatChieu;
 	private DefaultTableModel modelLichChieu, modelSuatChieu;
 	private JScrollPane scrollLichChieu, scrollSuatChieu;
+	private JLayeredPane layeredPane = new JLayeredPane();
 	private Connection con;
 	private LichChieu_DAO lichChieu_DAO = new LichChieu_DAO(); 
 	private Ve_DAO ve_DAO = new Ve_DAO();
+	private FrmPnlGhe frmPnlGhe = new FrmPnlGhe();
+	private JPanel pnlVe;
 	public FrmVe() throws ParseException, IOException  {
-		add(taoFrmVe());
+		getContentPane().add(taoFrmVe());
 		setSize(1030,645);
 	}
 	public JPanel taoFrmVe() throws IOException {
@@ -112,7 +118,7 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		txtTenPhim.setFocusable(false);
 		txtNgayChieu = new JTextField();
 		txtNgayChieu.setFocusable(false);
-		txtSuatChieu = new JDateChooser();
+		txtSuatChieu = new JTextField();
 		txtSuatChieu.setFocusable(false);
 		txtSoGhe = new JTextField(15);
 		txtSoGhe.setFocusable(false);
@@ -213,22 +219,14 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 					pnlVeLeftCenLeft.setLayout(new BoxLayout(pnlVeLeftCenLeft, BoxLayout.Y_AXIS));
 					pnlVeLeftCenLeft.setBackground(new Color(204, 241, 157));
 					pnlVeLeftCenLeft.add(labMaKH);
-					pnlVeLeftCenLeft.add(Box.createVerticalStrut(29));
+					pnlVeLeftCenLeft.add(Box.createVerticalStrut(45));
 					pnlVeLeftCenLeft.add(labTenKH);
-					pnlVeLeftCenLeft.add(Box.createVerticalStrut(29));
-					pnlVeLeftCenLeft.add(labEmail);
-					pnlVeLeftCenLeft.add(Box.createVerticalStrut(29));
-					pnlVeLeftCenLeft.add(labSDT);
 					JPanel pnlVeLeftCenRight = new JPanel();
 					pnlVeLeftCenRight.setLayout(new BoxLayout(pnlVeLeftCenRight, BoxLayout.Y_AXIS));
 					pnlVeLeftCenRight.setBackground(new Color(204, 241, 157));
 					pnlVeLeftCenRight.add(txtMaKH);
-					pnlVeLeftCenRight.add(Box.createVerticalStrut(20));
+					pnlVeLeftCenRight.add(Box.createVerticalStrut(45));
 					pnlVeLeftCenRight.add(txtTenKH);
-					pnlVeLeftCenRight.add(Box.createVerticalStrut(20));
-					pnlVeLeftCenRight.add(txtEmail);
-					pnlVeLeftCenRight.add(Box.createVerticalStrut(20));
-					pnlVeLeftCenRight.add(txtSDT);
 				pnlVeLeftCen.add(pnlVeLeftCenLeft);
 				pnlVeLeftCen.add(Box.createHorizontalStrut(10));
 				pnlVeLeftCen.add(pnlVeLeftCenRight);
@@ -276,7 +274,13 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		pnlVe.add(pnlVeLeft, BorderLayout.WEST);
 		pnlVe.add(pnlVeRight, BorderLayout.CENTER);
 		
+		layeredPane.setBackground(new Color(0, 51, 255));
+		layeredPane.setBounds(201, 0, 416, 629);
+		
+		
 		// ActionListener
+		btnDatVe.addActionListener(this);
+		
 		tableLichChieu.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -289,8 +293,19 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		        int selectedRow = tableSuatChieu.getSelectedRow();
-		        String maSuatChieu = (String) tableSuatChieu.getValueAt(selectedRow, 0); // Lấy mã suất chiếu từ bảng "Suất chiếu"
-		        
+		        if (selectedRow != -1) { // Đảm bảo rằng đã chọn một hàng
+		            frmPnlGhe.setVisible(true);
+		            String seat = frmPnlGhe.getTextFieldContent();
+		            txtSoGhe.setText(seat);
+		            txtTenPhim.setText(modelSuatChieu.getValueAt(selectedRow,1).toString());
+		            txtNgayChieu.setText(modelSuatChieu.getValueAt(selectedRow,2).toString());
+		            txtPhong.setText(modelSuatChieu.getValueAt(selectedRow,3).toString());
+					txtSuatChieu.setText(modelSuatChieu.getValueAt(selectedRow,4).toString());
+					int countVe = frmPnlGhe.getSelectedSeatsCount();
+					System.out.println(countVe);// Lấy số lượng ghế đã chọn từ FrmPnlGhe
+					String countVeString = String.valueOf(countVe); // Chuyển đổi số lượng ghế đã chọn thành chuỗi
+					txtSoLuongVe.setText(countVeString);
+		        }
 		    }
 		});
 
@@ -300,7 +315,12 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		pnlVe.setSize(1040,645);
 		return pnlVe;
 	}
-
+	public void switchPanels(JPanel panel) {
+		layeredPane.removeAll();
+		layeredPane.add(panel);
+		layeredPane.repaint();
+		layeredPane.revalidate();
+	}
 	public void DocDuLieuSuatChieuVaoTable() {
 		List<ChiTietSuatChieu> listSC = ve_DAO.getListSuatChieu();
 		for (ChiTietSuatChieu sc : listSC) {
@@ -309,6 +329,7 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		}
 		tableSuatChieu.setModel(modelSuatChieu);
 	}
+	
 	public void DocDuLCVaoTable() {
 		List<LichChieu> listchieus = lichChieu_DAO.getAllLC();
 		for (LichChieu lc : listchieus) {
@@ -316,14 +337,12 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		}
 		tableLichChieu.setModel(modelLichChieu);
 	}
-	private Icon createImage(URL resource) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	public void XoaTrangTable() {
 		DefaultTableModel d = (DefaultTableModel) tableSuatChieu.getModel();
 		d.getDataVector().removeAllElements();
 	}
+	
 	public void DocDuSCVaoTable(Date ngayChieu) {
 		XoaTrangTable();
 		List<ChiTietSuatChieu> suatChieu = ve_DAO.timTheoNgayChieu(ngayChieu);
@@ -333,13 +352,10 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 		}
 		tableSuatChieu.setModel(modelSuatChieu);
 	}
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		int row = tableLichChieu.getSelectedRow();
-		Date ngayChieu = (Date) tableLichChieu.getModel().getValueAt(row, 1);
-		DocDuSCVaoTable(ngayChieu);
+		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -364,6 +380,11 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		Object o = e.getSource();
+		if(o == btnBanVe) {
+			
+			JOptionPane.showMessageDialog(this, "Bán Thành Công!");
+		}
 		
 	}
 	public static void main(String[] args) {
@@ -373,5 +394,6 @@ public class FrmVe extends JFrame implements ActionListener,MouseListener {
 			e.printStackTrace();
 		}
 	}
+	
 }
 

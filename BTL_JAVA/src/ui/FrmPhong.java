@@ -181,7 +181,8 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		
 		pnPhong.add(pnTXT);
 		pnPhong.add(pnTable);
-		
+		btnThem.setEnabled(false);
+		btnXoa.setEnabled(false);
 		table.addMouseListener(this);
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
@@ -203,9 +204,9 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		Object o = e.getSource();
 		if(o == btnThem) {
 			String ma = txtMa.getText().trim();
-			String ten = txtTen.getText().trim();
+			int ten =Integer.parseInt(txtTen.getText())  ;
 			String soLuongGhe = txtSLGhe.getText().trim();
-			if(ma.isEmpty() || ten.isEmpty() || soLuongGhe.isEmpty()) {
+			if(ma.isEmpty() || soLuongGhe.isEmpty()) {
 				JOptionPane.showMessageDialog(this,
 		                "Vui lòng nhập đầy đủ thông tin!",
 		                "Lỗi!",
@@ -263,10 +264,11 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 				return;
 			}
 			
+			
 			String ma = txtMa.getText().trim();
-			String ten = txtTen.getText().trim();
+			int ten =Integer.parseInt(txtTen.getText()) ;
 			String soLuongGhe = txtSLGhe.getText().trim();
-			if(ma.isEmpty() || ten.isEmpty() || soLuongGhe.isEmpty()) {
+			if(ma.isEmpty()  || soLuongGhe.isEmpty()) {
 				JOptionPane.showMessageDialog(this,
 					"Vui lòng nhập đầy đủ thông tin!",
 					"Lỗi!",
@@ -331,6 +333,7 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		txtMa.setText("");
 		txtTen.setText("");
 		txtSLGhe.setText("");
+		txtMa.setEditable(true);
 	}
 	
 	private void DocDuLieuVaoTable() {
@@ -363,7 +366,8 @@ public class FrmPhong extends JFrame implements ActionListener, MouseListener{
 		int row = table.getSelectedRow();
 		txtMa.setText(model.getValueAt(row, 0).toString());
 		txtTen.setText(model.getValueAt(row, 1).toString());
-		txtSLGhe.setText(model.getValueAt(row, 2).toString()); 
+		txtSLGhe.setText(model.getValueAt(row, 2).toString());
+		txtMa.setEditable(false);
 //		btnThem.setEnabled(false);
 		
 	}

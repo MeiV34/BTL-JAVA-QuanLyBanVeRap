@@ -24,7 +24,7 @@ public class Phong_DAO {
 			ResultSet rs = state.executeQuery(sql);
 			while(rs.next()) {
 				String idPhong = rs.getString(1);
-				String ten = rs.getString(2);
+				int ten = rs.getInt(2);
 				int soLuongGhe = rs.getInt(3);
 				Phong kh = new Phong(idPhong, ten, soLuongGhe);
 				listPhong.add(kh);
@@ -44,7 +44,7 @@ public class Phong_DAO {
 				String sql = "INSERT INTO Phong VALUES(?,?,?)";
 				PreparedStatement state = con.prepareStatement(sql);
 				state.setString(1, data.getMaPhong());
-				state.setString(2, data.getTenPhong());
+				state.setInt(2, data.getTenPhong());
 				state.setInt(3, data.getSoLuongGhe());
 				n = state.executeUpdate();
 			}catch(SQLException e) {
@@ -63,11 +63,11 @@ public class Phong_DAO {
 		PreparedStatement state = null;
 		try {
 			String sql = "UPDATE Phong SET "
-						+ "TenPhong = ?, "
-						+ "SoLuongGhe = ? "
+						+ "soPhong = ?, "
+						+ "soLuongGhe = ? "
 						+ "WHERE MaPhong = ?";
 			state = con.prepareStatement(sql);
-			state.setString(1, data.getTenPhong());
+			state.setInt(1, data.getTenPhong());
 			state.setInt(2, data.getSoLuongGhe());
 			state.setString(3, data.getMaPhong());
 			n = state.executeUpdate();

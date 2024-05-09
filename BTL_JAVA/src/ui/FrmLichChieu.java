@@ -366,8 +366,8 @@ public class FrmLichChieu extends JFrame implements ActionListener,MouseListener
 			try {
 				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				String strNgayChieu = dateFormat.format(txtNgayChieu.getDate());
-				java.sql.Date ngayChieu = java.sql.Date.valueOf(strNgayChieu);
-				frmSC = new FrmSuatChieu(ngayChieu);
+				java.util.Date ngayChieu = java.sql.Date.valueOf(strNgayChieu);
+				frmSC = new FrmSuatChieu();
 				frmSC.setVisible(true);
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
